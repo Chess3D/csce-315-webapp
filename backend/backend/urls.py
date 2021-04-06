@@ -19,7 +19,7 @@ from rest_framework import routers
 from webapp import views
 
 router = routers.DefaultRouter()
-router.register(r'webapp', views.WebappView, 'webapp')
+router.register(r'webapps', views.WebappView, 'webapp')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

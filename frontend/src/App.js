@@ -23,7 +23,7 @@ class App extends Component {
 
   refreshList = () => {
     axios
-      .get("/api/todos/")
+      .get("/api/webapps/")
       .then((res) => this.setState({ todoList: res.data }))
       .catch((err) => console.log(err));
   };
@@ -37,18 +37,18 @@ class App extends Component {
 
     if (item.id) {
       axios
-        .put(`/api/todos/${item.id}/`, item)
+        .put(`/api/webapps/${item.id}/`, item)
         .then((res) => this.refreshList());
       return;
     }
     axios
-      .post("/api/todos/", item)
+      .post("/api/webapps/", item)
       .then((res) => this.refreshList());
   };
 
   handleDelete = (item) => {
     axios
-      .delete(`/api/todos/${item.id}/`)
+      .delete(`/api/webapps/${item.id}/`)
       .then((res) => this.refreshList());
   };
 
