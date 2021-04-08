@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
+import TopNavbar from './components/TopNavbar';
+
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <React.StrictMode>
+    <TopNavbar />
+  </React.StrictMode>,
   document.getElementById('root')
 );
