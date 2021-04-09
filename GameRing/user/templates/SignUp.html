@@ -1,0 +1,64 @@
+<!-- Sign Up button -->
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#signUp">
+  Sign Up
+</button>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="signUp" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signUpLable">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-3">
+          <div class="mb-3">
+            <label for="signUpUsername" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="signUpUsername"
+
+              placeholder="Enter Username"
+              autocomplete="off"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="signUpEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="signUpEmail"
+
+              placeholder="Enter Email"
+              autocomplete="off"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="signUpPassword1" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="signUpPassword1"
+
+              placeholder="Enter Password"
+              autocomplete="off"
+            >
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              class="form-control"
+              id="signUpPassword2"
+              
+              placeholder="Confirm Password"
+              autocomplete="off"
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+  </div>
+</div>

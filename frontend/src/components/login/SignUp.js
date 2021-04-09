@@ -23,7 +23,7 @@ class SignUp extends React.Component {
     modal: false
   }
 
-  onToggle = (e) => {
+  onToggle = () => {
     this.setState({ modal: !this.state.modal});
   };
 
@@ -103,7 +103,6 @@ class SignUp extends React.Component {
               />
             </FormGroup>
             <FormGroup className="form-group">
-              <Label for="confirm">Password</Label>
               <Input
                 autocomplete="off"
                 placeholder="Confirm Password"
@@ -119,7 +118,7 @@ class SignUp extends React.Component {
           </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.onSubmit}>Submit</Button>{' '}
+            <Button color="primary" onClick={this.onSubmit}>Submit</Button>
             <Button color="secondary" onClick={this.onToggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
