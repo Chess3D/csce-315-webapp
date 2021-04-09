@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 
+// import axios from "axios";
+
+// import { API_URL } from "../constants";
+
 import {
-  Col,
   Button,
   Form,
   FormGroup,
@@ -10,6 +13,11 @@ import {
 } from 'reactstrap';
 
 const Login = (props) => {
+  // state = {
+  //   email: "",
+  //   password: ""
+  // }
+
   return (
       <Form className='m-3'>
         <FormGroup>
@@ -20,7 +28,7 @@ const Login = (props) => {
           <Label for="loginEmail">Password</Label>
           <Input type="password" name="password" id="loginEmail" autocomplete="off" placeholder="Please Enter Password"/>
         </FormGroup>
-        <Button variant="primary" type="submit">Login</Button>
+        <Button color="primary" type="submit">Login</Button>
       </Form>
   );
 }
