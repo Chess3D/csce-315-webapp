@@ -5,7 +5,6 @@ import './index.css';
 
 import TopNavbar from './components/TopNavbar';
 import Login from './components/login/Login';
-import SignUp from './components/login/SignUp';
 
 
 ReactDOM.render(

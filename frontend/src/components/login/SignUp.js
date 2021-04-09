@@ -1,57 +1,66 @@
-import React, { useState } from 'react';
+import React from 'react'
+
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
-  FormGroup,
   Label,
   Input,
+  FormGroup,
+  ModalFooter,
 } from 'reactstrap';
 
-const SignUp = (props) => {
-  const {
-    buttonLabel,
-    className
-  } = props;
+class SignUp extends React.Component {
+  state = {
+    username: "",
+    email: "",
+    password: "",
+    modal: false
+  }
 
-  const [modal, setModal] = useState(false);
+  toggle = (e) => {
+    this.setState({ modal: !this.state.modal})
+  };
 
-  const toggle = () => setModal(!modal);
+  submit = (e) => {
 
-  return (
-    <div>
-      <Button color="secondary" onClick={toggle}>Sign Up</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Sign Up</ModalHeader>
-        <ModalBody>
-          <Form>
-          <FormGroup>
-            <Label for="Username">Username</Label>
-            <Input type="username" name="email" id="username" autocomplete="off" placeholder="Enter Username"/>
-          </FormGroup>
-          <FormGroup>
-            <Label for="signUpEmail">Email</Label>
-            <Input type="email" name="email" id="signUpEmail" autocomplete="off" placeholder="Enter Email"/>
-          </FormGroup>
-          <FormGroup>
-            <Label for="signUpPassword">Password</Label>
-            <Input type="password" name="password" id="signUpPassword" autocomplete="off" placeholder="Enter Password"/>
-          </FormGroup>
-          <FormGroup>
-            <Input type="passwordConfirm" name="passwordConfirm" id="passwordConfirm" autocomplete="off" placeholder="Confirm Password"/>
-          </FormGroup>
-        </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Submit</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
-  );
+  }
+
+  render() {
+    return (
+      <div>
+        <Button color="secondary" onClick={this.toggle}>Sign Up</Button>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className="signUp">
+          <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
+          <ModalBody>
+            <Form>
+            <FormGroup>
+              <Label for="Username">Username</Label>
+              <Input type="username" name="email" id="username" autocomplete="off" placeholder="Enter Username"/>
+            </FormGroup>
+            <FormGroup>
+              <Label for="signUpEmail">Email</Label>
+              <Input type="email" name="email" id="signUpEmail" autocomplete="off" placeholder="Enter Email"/>
+            </FormGroup>
+            <FormGroup>
+              <Label for="signUpPassword">Password</Label>
+              <Input type="password" name="password" id="signUpPassword" autocomplete="off" placeholder="Enter Password"/>
+            </FormGroup>
+            <FormGroup>
+              <Input type="passwordConfirm" name="passwordConfirm" id="passwordConfirm" autocomplete="off" placeholder="Confirm Password"/>
+            </FormGroup>
+          </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.submit}>Submit</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );   
+  }
 }
 
-export default SignUp;
+export default SignUp
