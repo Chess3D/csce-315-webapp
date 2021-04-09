@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <TopNavbar />
     <Login />
-    <SignUp />
+    {/* <SignUp /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

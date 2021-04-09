@@ -9,17 +9,22 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  Col,
+  Row
 } from 'reactstrap';
+
+import SignUp from './SignUp';
 
 const Login = (props) => {
   // state = {
   //   email: "",
   //   password: ""
   // }
+  var offset = 3
 
   return (
-      <Form className='m-3'>
+      <Form className={`m-${offset}`}>
         <FormGroup>
           <Label for="loginEmail">Email</Label>
           <Input type="email" name="email" id="loginEmail" autocomplete="off" placeholder="Please Enter Email"/>
@@ -28,7 +33,11 @@ const Login = (props) => {
           <Label for="loginEmail">Password</Label>
           <Input type="password" name="password" id="loginEmail" autocomplete="off" placeholder="Please Enter Password"/>
         </FormGroup>
-        <Button color="primary" type="submit">Login</Button>
+        <Row>
+          <Button color="primary" type="submit" className={`mx-${offset}`}>Login</Button>
+          <SignUp />
+        </Row>
+        
       </Form>
   );
 }
