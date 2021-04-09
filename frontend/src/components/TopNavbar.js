@@ -7,11 +7,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
 } from 'reactstrap';
 
 const TopNavbar = (props) => {
@@ -27,16 +22,16 @@ const TopNavbar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Scrims</NavLink>
+              <NavLink href="/scrim">Scrim</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/components/">Tournaments</NavLink>
+              <NavLink href="/tournament">Tournament</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/components/">Teams</NavLink>
+              <NavLink href="/team">Team</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/components/">Login</NavLink>
+              <NavLink href="/login">Login</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
