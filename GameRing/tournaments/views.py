@@ -1,9 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Tournament
+from rest_framework.decorators import api_view
+
+from .forms import TournamentCreationForm
 
 def tournaments(request):
     return render(request, 'tournaments/tournaments.html')
+
+def create_tournaments(request):
+    form = TournamentCreationForm()
+    if request.method == 'POST':
+        form = TournamentCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('create-tournament')
+    return render(request, 'tournaments/create_tournament.html', {'form': form})
 
 @api_view(['GET', 'POST'])
 def tournaments_list(request):
@@ -33,3 +45,4 @@ def tournaments_details(request, pk):
     elif request.method == 'DELETE':
         student.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
