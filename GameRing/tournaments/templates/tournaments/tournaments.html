@@ -32,11 +32,41 @@
   </div>
 </nav>
 
-<!-- Tournamnents work in progres -->
 
+<!-- Tournaments work in progress -->
+<div class="tournaments m-3">
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Search</span>
+    <input type="text" class="form-control" placeholder="Browse Tournaments" aria-label="Browse Tournaments" aria-describedby="basic-addon1">
+  </div>
 
-<div class="input-group">
-    <input type="search" class="form-control rounded" placeholder="Browse existing tournaments" aria-label="Search"
-      aria-describedby="search-addon" />
-    <button type="button" class="btn btn-outline-primary">Search</button>
+  <h1 class="mb-3">My Tournaments</h1>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      {% for tournament in my_tournaments %}
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="{{ tournament.name }}"></button>
+      {% endfor %}
+      <!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
+    </div>
+    <div class="carousel-inner">
+      {% for tournament in my_tournaments %}
+      <div class="carousel-item active">
+        <img src="{{ tournament.image }}" class="d-block w-100" alt="{{ tournament.description }}">
+      </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <h1 class="mb-3">Upcoming Tournaments</h1>
+  
 </div>
