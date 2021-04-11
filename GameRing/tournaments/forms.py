@@ -5,7 +5,19 @@ from tournaments.models import Tournament
 class TournamentCreationForm(forms.ModelForm):
     class Meta:
         model = Tournament
-        fields = '__all__'
+        fields = ('name', 
+        'tournamentGameName', 
+        'tournamentType', 
+        'tournamentGrandFinalsMod', 
+        'tournamentSignUpCap', 
+        'tournamentStartDate', 
+        'tournamentThirdPlaceMatch', 
+        'tournamentShowRounds', 
+        'tournamentPrivate', 
+        'tournamentNotifyUserWhenOpen', 
+        'tournamentNotifyUserWhenTournyEnd',
+        'tournamentDescription',
+        )
 
         widgets = {
            #Text Inputs
@@ -16,4 +28,5 @@ class TournamentCreationForm(forms.ModelForm):
            #Drop down
            'tournamentType': forms.Select(attrs={'class': 'form-control'}),
            'tournamentGameName': forms.Select(attrs={'class': 'form-control'}),
+           'tournamentGrandFinalsMod': forms.Select(attrs={'class': 'form-control'}),
         }
