@@ -9,48 +9,32 @@
   </div>
 
   <h1 class="mb-3">My Tournaments</h1>
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      {% for tournament in my_tournaments %}
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="{{ tournament.name }}"></button>
-      {% endfor %}
-      <!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
-    </div>
-    <div class="carousel-inner">
-      {% for tournament in my_tournaments %}
-      <div class="carousel-item active">
-        <!-- <img src="{{ tournament.image }}" class="d-block w-100" alt="{{ tournament.description }}"> -->
 
+  {% for tournament in tournaments %}
+    <div class="card mb-3" style="width: 10vw;">
+      <img src="{{ tournament.image.url }}" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ tournament.name }}</h5>
+        <p class="card-text">{{ tournament.description }}</p>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
       </div>
-      {% endfor %}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+  {% endfor %}
 
   <h1 class="mb-3">Upcoming Tournaments</h1>
+
   {% for tournament in tournaments %}
-       <div class="content-section">
-         <div class="media">
-           <img class="rounded account-img" src="{{ tournament.image.url }}" width="200" height="200">
-           <div class="media-body">
-             <h2 class="tournament-heading">{{ tournament.name }}</h2>
-           </div>
-         </div>
-       </div>
-    {% endfor %}
+    <div class="card mb-3" style="width: 10vw;">
+      <img src="{{ tournament.image.url }}" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ tournament.name }}</h5>
+        <p class="card-text">{{ tournament.description }}</p>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+  {% endfor %}
 </div>
 
-<h3>Create Tournament</h3>
-<form>
-  <input type="button" onclick="create-tournaments.html" value="Create" />
-</form>
+<a class="btn btn-primary mx-3" href="./create-tournament" role="button">New Tournament</a>
+
 {% endblock content %}
