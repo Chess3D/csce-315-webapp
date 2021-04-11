@@ -6,26 +6,36 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1=main
   - asgiref=3.3.2=pyhd3eb1b0_0
-  - ca-certificates=2021.1.19=h06a4308_1
-  - certifi=2020.12.5=py38h06a4308_0
+  - ca-certificates=2020.10.14=0
+  - certifi=2020.6.20=py38_0
   - django=3.1.2=py_0
   - django-cors-headers=3.4.0=pyh9f0ad1d_0
+  - django-crispy-forms=1.11.2=pyhd8ed1ab_0
   - djangorestframework=3.12.4=pyhd8ed1ab_0
+  - freetype=2.10.4=h5ab3b9f_0
   - icu=68.1=h2531618_0
+  - jpeg=9b=habf39ab_1
   - krb5=1.17.1=h173b8e3_0
+  - lcms2=2.11=h396b838_0
   - ld_impl_linux-64=2.33.1=h53a641e_7
   - libedit=3.1.20210216=h27cfd23_1
   - libffi=3.3=he6710b0_2
   - libgcc-ng=9.1.0=hdf63c60_0
+  - libpng=1.6.37=hbc83047_0
   - libpq=12.2=h20c2e04_0
   - libstdcxx-ng=9.1.0=hdf63c60_0
+  - libtiff=4.1.0=h2733197_1
   - libuv=1.40.0=h7b6447c_0
+  - lz4-c=1.9.2=heb0550a_3
   - ncurses=6.2=he6710b0_1
   - nodejs=14.8.0=hda19d22_0
+  - olefile=0.46=py_0
   - openssl=1.1.1k=h27cfd23_0
+  - pillow=8.0.0=py38h9a89aac_0
   - pip=21.0.1=py38h06a4308_0
   - psycopg2=2.8.6=py38h3c74f83_1
   - python=3.8.8=hdb3f193_4
+  - python_abi=3.8=1_cp38
   - pytz=2021.1=pyhd3eb1b0_0
   - readline=8.1=h27cfd23_0
   - setuptools=52.0.0=py38h06a4308_0
@@ -35,4 +45,5 @@ dependencies:
   - wheel=0.36.2=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
+  - zstd=1.4.4=h0b5b093_3
 prefix: /home/bcarl/miniconda3/envs/webapp
