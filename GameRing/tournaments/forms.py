@@ -5,7 +5,8 @@ from tournaments.models import Tournament
 class TournamentCreationForm(forms.ModelForm):
     class Meta:
         model = Tournament
-        fields = ('name', 
+        fields = (
+        'name', 
         'tournamentGameName', 
         'tournamentType', 
         'tournamentGrandFinalsMod', 
@@ -17,6 +18,7 @@ class TournamentCreationForm(forms.ModelForm):
         'tournamentNotifyUserWhenOpen', 
         'tournamentNotifyUserWhenTournyEnd',
         'tournamentDescription',
+        'image',
         )
 
         widgets = {

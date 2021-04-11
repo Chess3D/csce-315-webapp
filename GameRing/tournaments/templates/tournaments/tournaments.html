@@ -21,7 +21,8 @@
     <div class="carousel-inner">
       {% for tournament in my_tournaments %}
       <div class="carousel-item active">
-        <img src="{{ tournament.image }}" class="d-block w-100" alt="{{ tournament.description }}">
+        <!-- <img src="{{ tournament.image }}" class="d-block w-100" alt="{{ tournament.description }}"> -->
+
       </div>
       {% endfor %}
     </div>
@@ -36,7 +37,16 @@
   </div>
 
   <h1 class="mb-3">Upcoming Tournaments</h1>
-  
+  {% for tournament in tournaments %}
+       <div class="content-section">
+         <div class="media">
+           <img class="rounded account-img" src="{{ tournament.image.url }}" width="200" height="200">
+           <div class="media-body">
+             <h2 class="tournament-heading">{{ tournament.name }}</h2>
+           </div>
+         </div>
+       </div>
+    {% endfor %}
 </div>
 
 {% endblock content %}
