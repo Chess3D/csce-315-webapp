@@ -1,12 +1,12 @@
 {% extends "user/base.html" %}
 {% block content %}
 
-<html class="m-3">
-  <h1>Create Tournament</h1>
+<html>
+  <h1 class="m-3">Create Tournament</h1>
   <br/><br/>
   
   <div class="form-div"></div>
-    <form action="" method="POST">
+    <form action="" method="POST" class="m-3">
       {% csrf_token %}
       {{ form.as_p }}
       <input type="submit" value="Create Tournament"/>
