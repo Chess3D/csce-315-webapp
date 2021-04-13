@@ -24,7 +24,7 @@ def create_tournament(parameters):
             'start_at' : parameters['tournamentStartDate'],
             'hold_third_place_match' : parameters['tournamentThirdPlaceMatch'],
             'show_rounds' : parameters['tournamentShowRounds'],
-            'private' : parameters['tournamentPrivate'],
+            'private' : 'true',
             'description' : parameters['tournamentDescription']
             }
     r = requests.post(url, data)
