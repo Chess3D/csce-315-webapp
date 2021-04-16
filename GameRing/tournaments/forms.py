@@ -19,6 +19,7 @@ class TournamentCreationForm(forms.ModelForm):
         'tournamentNotifyUserWhenTournyEnd',
         'tournamentDescription',
         'image',
+        'creator',
         )
 
         widgets = {

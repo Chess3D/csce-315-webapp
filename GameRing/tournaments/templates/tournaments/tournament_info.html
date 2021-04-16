@@ -1,0 +1,25 @@
+{% extends "user/base.html" %}
+{% block content %}
+
+<h1>About {{ tournament.name }}</h1>
+
+<div class="tournament info">
+    <div class="media">
+        <img class="" src="{{ tournament.image.url }}">
+        <div class="media-body">
+            <h2>Creator: {{ tournament.creator }}</h2>
+            <h2>Game: {{ tournament.tournamentGameName }}</h2>
+            <h2>Capacity: {{ tournament.tournamentSignUpCap }}</h2>
+            <p>Description: {{ tournament.tournamentDescription }}</p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Join Tournament Button -->
+<div class="fixed-bottom m-3">
+    <a class="btn btn-primary btn-lg float-end" href="./create" role="button" width="40">Join</a>
+  </div>
+
+{% endblock content %}
