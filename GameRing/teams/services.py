@@ -1,7 +1,10 @@
 import os
 import requests
 import json
-
+'''
+NOTE: What is referred to as a 'participant' is a team.
+      Members of said team are stored in our database.
+'''
 #participants API GET
 def get_participants(tournamentURL):
     url = 'https://api.challonge.com/v1/tournaments/' + str(tournamentURL) + '/participants.json'
