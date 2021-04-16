@@ -14,13 +14,15 @@ def teams(request):
 
     return render(request, 'teams/teams.html')
 
+
 def about_team(request, team_id):
     context = {
         'team_id': team_id,
-        'team': Team.objects.all()
+        'team': Team.objects.get(id=team_id)
     }
 
     return render(request, 'teams/about_team.html', context)
+
 
 def create(request):
     form = TeamCreationForm()
