@@ -29,3 +29,9 @@ def create_tournament(parameters):
             }
     r = requests.post(url, data)
     return r.json()
+
+#tournament API DELETE
+def delete_tournament(tournamentid)
+    url = 'https://api.challonge.com/v1/tournaments/' + tournamentid + '.json'
+    r = requests.delete(url)
+    return r.josn()
