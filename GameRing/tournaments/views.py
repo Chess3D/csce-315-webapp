@@ -6,11 +6,13 @@ from rest_framework.decorators import api_view
 
 from .forms import TournamentCreationForm
 
+
 def tournaments(request):
     context = {
         'tournaments': Tournament.objects.all()
     }
     return render(request, 'tournaments/tournaments.html')
+
 
 def create_tournaments(request):
     form = TournamentCreationForm()
@@ -18,8 +20,9 @@ def create_tournaments(request):
         form = TournamentCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('create-tournament')
+            return redirect('create')
     return render(request, 'tournaments/create_tournament.html', {'form': form})
+
 
 @api_view(['GET', 'POST'])
 def tournaments_list(request):
@@ -32,6 +35,7 @@ def tournaments_list(request):
         if serializer.is_valid():
             serializer.save()
             return HttpResponse(status=status.HTTP_201_CREATED)
+
 
 @api_view(['PUT', 'DELETE'])
 def tournaments_details(request, pk):
@@ -50,8 +54,8 @@ def tournaments_details(request, pk):
         student.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
+
 class TournamentListView(ListView):
     model = Tournament
     template_name = 'tournaments/tournaments.html'
     context_object_name = 'tournaments'
-

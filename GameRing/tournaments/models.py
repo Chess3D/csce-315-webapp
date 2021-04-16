@@ -34,7 +34,7 @@ class Tournament(models.Model):
     #tournamentSeqPairings = models.BooleanField("tournamentSeqPairings", default=False)
     #tournamentCheckInDuration = models.BigIntegerField("tournamentCheckInDuration") #in minutes
     tournamentDescription = models.CharField("Description", max_length=511)
-    image = models.ImageField(upload_to='card_images', default = 'card_images/GameRing.png')
+    image = models.ImageField(upload_to='card_images/', default = 'card_images/GameRing.png')
     
 
     def __str__(self):
