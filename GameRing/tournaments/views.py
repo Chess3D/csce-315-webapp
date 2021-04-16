@@ -24,6 +24,20 @@ def create_tournaments(request):
     return render(request, 'tournaments/create_tournament.html', {'form': form})
 
 
+def about_team(request, tournament_id):
+    context = {
+        'tournament_id': tournament_id,
+        'tournament': Tournament.objects.get(id=tournament_id)
+    }
+
+    return render(request, 'tournaments/about_tournament.html', context)
+
+
+class TournamentListView(ListView):
+    model = Tournament
+    template_name = 'tournaments/tournaments.html'
+    context_object_name = 'tournaments'
+
 # @api_view(['GET', 'POST'])
 # def tournaments_list(request):
 #     if request.method == 'GET':
@@ -55,7 +69,4 @@ def create_tournaments(request):
 #         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
 
-class TournamentListView(ListView):
-    model = Tournament
-    template_name = 'tournaments/tournaments.html'
-    context_object_name = 'tournaments'
+

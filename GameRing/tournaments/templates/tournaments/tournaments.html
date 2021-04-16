@@ -12,16 +12,17 @@
   
   <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
     {% for tournament in tournaments %}
-    <div class="col">
-      <div class="card mb-3 h-100">
-        <img src="{{ tournament.image.url }}" alt="Tournament Logo">
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+          <img src="{{ tournament.image.url }}" alt="Tournament Logo">
 
-        <div class="card-body">
-          <h5 class="card-title">{{ tournament.name }}</h5>
-          <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+            <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
         </div>
       </div>
-    </div>
     {% endfor %}
   </div>
 
@@ -29,25 +30,23 @@
 
   <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
     {% for tournament in tournaments %}
-    <div class="col">
-      <div class="card mb-3 h-100">
-        <img src="{{ tournament.image.url }}" alt="Tournament Logo">
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+          <img src="{{ tournament.image.url }}" alt="Tournament Logo">
 
-        <div class="card-body">
-          <h5 class="card-title">{{ tournament.name }}</h5>
-          <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+            <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
         </div>
       </div>
-    </div>
     {% endfor %}
   </div>
-</div>
 
 <!-- Create Tournament Button -->
 <div class="fixed-bottom m-3">
   <a class="btn btn-primary btn-lg float-end" href="./create" role="button" width="40">New Tournament</a>
 </div>
-
-<!-- <a class="btn btn-primary btn-lg float-end m-3" href="./create-tournament" role="button" width="40">New Tournament</a> -->
 
 {% endblock content %}
