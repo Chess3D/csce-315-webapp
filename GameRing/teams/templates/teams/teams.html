@@ -13,13 +13,13 @@
   <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
     {% for team in teams %}
       <div class="col">
-        <div class="card mb-3 h-100">
+        <div class="card mb-3 h-100 position-relative">
           <img src="{{ team.logo.url }}" alt="Team Logo">
 
           <div class="card-body">
             <h5 class="card-title">{{ team.name }}</h5>
-            <!-- <p class="card-text">{{ team.description }}</p> -->
           </div>
+          <a href="./{{ team.id }}" class="stretched-link"></a>
         </div>
       </div>
     {% endfor %}
@@ -30,18 +30,18 @@
   <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
     {% for team in teams %}
       <div class="col">
-        <div class="card mb-3 h-100">
+        <div class="card mb-3 h-100 position-relative">
           <img src="{{ team.logo.url }}" alt="Team Logo">
 
           <div class="card-body">
             <h5 class="card-title">{{ team.name }}</h5>
-            <!-- <p class="card-text">{{ team.description }}</p> -->
           </div>
+          <a href="./{{ team.id }}" class="stretched-link"></a>
         </div>
       </div>
     {% endfor %}
   </div>
-</div>
+
 
 <!-- Create Team Button -->
 <div class="fixed-bottom m-3">

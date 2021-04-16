@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import Team
 from .forms import TeamCreationForm
 from django.views.generic import ListView
+
 # from rest_framework.decorators import api_view
 
 def teams(request):
@@ -12,6 +13,14 @@ def teams(request):
     }
 
     return render(request, 'teams/teams.html')
+
+def about_team(request, team_id):
+    context = {
+        'team_id': team_id,
+        'team': Team.objects.all()
+    }
+
+    return render(request, 'teams/about_team.html', context)
 
 def create(request):
     form = TeamCreationForm()
@@ -24,6 +33,7 @@ def create(request):
             return redirect('create')
 
     return render(request, 'teams/create_team.html', {'form': form})
+
 
 class TeamListView(ListView):
     model = Team
