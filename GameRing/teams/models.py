@@ -12,3 +12,6 @@ class Team(models.Model):
     game = models.CharField("Game", max_length=31, choices=TEAM_TYPE_CHOICES, default='league')
     ELO = models.BigIntegerField("Hidden ELO", default="500")
     logo = models.ImageField(upload_to='card_images/', default = 'card_images/GameRing.png')
+
+    def __str__(self):
+        return self.name

@@ -8,8 +8,10 @@ def get_participants(tournamentURL):
     r = requests.get(url, headers={'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp'})
     participants = r.json()
     participant_list = []
+
     for i  in range(len(participants['participant'])):
         participant_list.append(participants['participant'][i])
+    
     return participant_list
 
 #participants API POST
@@ -18,4 +20,5 @@ def add_participant(parameters):
     data = {'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
             'name' : parameters['name']}
     r = requests.post(url, data)
+
     return r.json()
