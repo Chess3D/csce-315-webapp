@@ -9,32 +9,45 @@
   </div>
 
   <h1 class="mb-3">My Tournaments</h1>
+  
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+    <div class="col">
+      <div class="card mb-3 h-100">
+        <img src="{{ tournament.image.url }}" alt="Team Logo">
 
-  {% for tournament in tournaments %}
-    <div class="card mb-3" style="width: 10vw;">
-      <img src="{{ tournament.image.url }}" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{ tournament.name }}</h5>
-        <p class="card-text">{{ tournament.description }}</p>
-        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        <div class="card-body">
+          <h5 class="card-title">{{ tournament.name }}</h5>
+          <p class="card-text">{{ tournament.tournamentDescription }}</p>
+        </div>
       </div>
     </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
 
   <h1 class="mb-3">Upcoming Tournaments</h1>
 
-  {% for tournament in tournaments %}
-    <div class="card mb-3" style="width: 10vw;">
-      <img src="{{ tournament.image.url }}" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{ tournament.name }}</h5>
-        <p class="card-text">{{ tournament.description }}</p>
-        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+    <div class="col">
+      <div class="card mb-3 h-100">
+        <img src="{{ tournament.image.url }}" alt="Team Logo">
+
+        <div class="card-body">
+          <h5 class="card-title">{{ tournament.name }}</h5>
+          <p class="card-text">{{ tournament.tournamentDescription }}</p>
+        </div>
       </div>
     </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 
-<a class="btn btn-primary mx-3" href="./create-tournament" role="button">New Tournament</a>
+<!-- Create Tournament Button -->
+<div class="fixed-bottom m-3">
+  <a class="btn btn-primary btn-lg float-end" href="./create-tournament" role="button" width="40">New Tournament</a>
+</div>
+
+<!-- <a class="btn btn-primary btn-lg float-end m-3" href="./create-tournament" role="button" width="40">New Tournament</a> -->
 
 {% endblock content %}
