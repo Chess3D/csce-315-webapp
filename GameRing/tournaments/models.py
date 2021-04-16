@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
+from teams.models import Team
 
 TOURNAMENT_TYPE_CHOICES= [
     ('round-robin', 'Round Robin'),
@@ -37,6 +38,7 @@ class Tournament(models.Model):
     tournamentDescription = models.CharField("Description", max_length=511)
     image = models.ImageField(upload_to='card_images/', default = 'card_images/GameRing.png')
     creator = models.OneToOneField(User, on_delete=models.CASCADE, default="")
+    teams = models.ManyToManyField(Team)
     
 
     def __str__(self):
