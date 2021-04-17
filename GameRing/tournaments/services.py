@@ -46,7 +46,7 @@ def delete_tournament(tournamentid):
 def update_tournament(tournamentid, fields, updated_values):
     url = 'https://api.challonge.com/v1/tournaments/' + tournamentid + '.json'
     data = {}
-    for i in fields
+    for i in range(fields):
         data[fields[i]] = updated_values[i]
     r = requests.put(url, data)
     return r.json()
