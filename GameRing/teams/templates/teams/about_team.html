@@ -2,8 +2,12 @@
 {% block content %}
 
 <div class="about_team m-3">
-    <h1>{{ team_id }}</h1>
-    <h1>{{ team.name }}</h1>
+    <h1 style="text-align: center;">{{ team_id }}</h1>
+    <h1 style="text-align: center;">{{ team.name}}</h1>
+    <h4 style="text-align: center;">Game: {{team.game}}</h4>
+
+    <!-- Need to center image, and display members-->
+    <img class="" src="{{ team.logo.url }}" width="200" height = "200">
 </div>
 
 {% endblock content %}
