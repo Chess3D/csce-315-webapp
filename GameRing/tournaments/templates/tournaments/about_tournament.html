@@ -1,9 +1,23 @@
 {% extends "user/base.html" %}
 {% block content %}
 
+
+<body>
 <div class="about_tournament m-3">
-    <h1>{{ tournament_id }}</h1>
-    <h1>{{ tournament.name }}</h1>
+    <h1 style="text-align: center;" >{{ tournament_id }}</h1>
+    <h1 style="text-align: center;">{{ tournament.name }}</h1>
+    <h6 style="text-align: center;">Creator: {{ tournament.creator }}</h6>
+    <h4 style="text-align: center;">Game: {{ tournament.tournamentGameName }}</h4>
+    <h6 style="text-align: center;">Capacity: {{ tournament.tournamentSignUpCap }}</h6>
+    <h4 style="text-align: center;">Start Date: {{tournament.tournamentStartDate}}</h4>
+    <h4 style="text-align: center;">Tournament type: {{tournament.tournamentType}}</h4>
+    <!-- Need to center image, and add any extra tournamnet information-->
+    <img class="center" src="{{ tournament.image.url }}" width="200" height = "200">
+
+    <p style="text-align: center;">Tournament Description: {{ tournament.tournamentDescription }}</p>
+    
+    
 </div>
+</body>
 
 {% endblock content %}
