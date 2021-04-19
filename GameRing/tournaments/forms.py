@@ -33,3 +33,10 @@ class TournamentCreationForm(forms.ModelForm):
            'tournamentGameName': forms.Select(attrs={'class': 'form-control'}),
            'tournamentGrandFinalsMod': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class TournamentJoinForm(forms.ModelForm):
+    class Meta:
+        model = Tournament
+        fields = (
+            'teams',
+        )

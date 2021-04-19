@@ -6,4 +6,13 @@
     <h1>{{ tournament.name }}</h1>
 </div>
 
+<!-- Join Tournament Button -->
+<div class="form-div"></div>
+    <form action="" method="POST" class="m-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Join Tournament"/>
+    </form>
+</div>
+
 {% endblock content %}

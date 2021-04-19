@@ -5,6 +5,7 @@ from django.views.generic import ListView
 # from rest_framework.decorators import api_view
 
 from .forms import TournamentCreationForm
+from .forms import TournamentJoinForm
 
 
 def tournaments(request):
@@ -31,6 +32,19 @@ def about_team(request, tournament_id):
     }
 
     return render(request, 'tournaments/about_tournament.html', context)
+
+def join_tournament(request, team_id):
+    form = TournamentJoinForm()
+    
+    if request.method == 'POST':
+        form = TournamentJoinForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('join')
+    return render(request, 'tournaments/tournaments.html', {'form': form})
+    #Tournament.teams.add(Team.objects.get(id=team_id))
+
+    #return render(request, 'tournaments/tournaments.html', context)
 
 
 class TournamentListView(ListView):
