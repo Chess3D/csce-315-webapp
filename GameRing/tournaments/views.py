@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Tournament
 from django.views.generic import ListView
+from teams.models import Team
 # from rest_framework.decorators import api_view
 
 from .forms import TournamentCreationForm
@@ -33,18 +34,19 @@ def about_team(request, tournament_id):
 
     return render(request, 'tournaments/about_tournament.html', context)
 
-def join_tournament(request, team_id):
-    form = TournamentJoinForm()
+def join_tournament(request, team_id, tournament_id):
     
-    if request.method == 'POST':
-        form = TournamentJoinForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('join')
-    return render(request, 'tournaments/tournaments.html', {'form': form})
-    #Tournament.teams.add(Team.objects.get(id=team_id))
+    new_team = Team.objects.get(id=team_id)
 
-    #return render(request, 'tournaments/tournaments.html', context)
+    context = {
+        'tournament_id': tournament_id,
+        'tournament': Tournament.objects.get(id=tournament_id),
+    }
+
+    Tournament.teams.add(new_team)
+    
+    return render(request, 'tournaments/about_tournament.html', context)
+
 
 
 class TournamentListView(ListView):

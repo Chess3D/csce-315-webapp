@@ -21,12 +21,8 @@
 </body>
 
 <!-- Join Tournament Button -->
-<div class="form-div"></div>
-    <form action="" method="POST" class="m-3">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Join Tournament"/>
-    </form>
+<div class="fixed-bottom m-3">
+    <a class="btn btn-primary btn-lg float-end" href="./join" role="button" width="40">Join Tournament</a>
 </div>
 
 {% endblock content %}
