@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from .models import Team
+from .models import TeamManager, Team
 from .forms import TeamCreationForm
 from django.views.generic import ListView
 
@@ -32,9 +32,23 @@ def create(request):
 
         if form.is_valid():
             form.save()
+            
             return redirect('create')
 
     return render(request, 'teams/create_team.html', {'form': form})
+
+
+def join_team(request, team_id):
+    context = {
+        'team_id': team_id,
+    }
+
+    team = Team.objects.get(id=team_id)
+    user = request.user
+
+    TeamManager.add_player(request, user, team)
+
+    return about_team(request, team_id)
 
 
 class TeamListView(ListView):

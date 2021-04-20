@@ -34,6 +34,7 @@ def about_team(request, tournament_id):
 
     return render(request, 'tournaments/about_tournament.html', context)
 
+
 def join_tournament(request, team_id, tournament_id):
     
     new_team = Team.objects.get(id=team_id)
