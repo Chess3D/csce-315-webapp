@@ -12,12 +12,9 @@ TEAM_TYPE_CHOICES = [
 class Team(models.Model):
     name = models.CharField("Name", max_length=64, unique=True)
     game = models.CharField("Game", max_length=32, choices=TEAM_TYPE_CHOICES, default='league')
-
     ELO = models.BigIntegerField("Hidden ELO", default="500")
-
     logo = models.ImageField(upload_to='card_images/', default = 'card_images/GameRing.png')
-
-    # players = models.ManyToManyField(User)
+    players = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name

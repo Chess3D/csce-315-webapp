@@ -26,7 +26,7 @@ def create_tournaments(request):
     return render(request, 'tournaments/create_tournament.html', {'form': form})
 
 
-def about_team(request, tournament_id):
+def about_tournament(request, tournament_id):
     context = {
         'tournament_id': tournament_id,
         'tournament': Tournament.objects.get(id=tournament_id)

@@ -1,13 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
 from django.http import HttpResponse
 
 from .models import TeamManager, Team
 from .forms import TeamCreationForm
 from django.views.generic import ListView
+from django.contrib.auth.models import User
 
 # from rest_framework.decorators import api_view
 
 def teams(request):
+    
     context = {
         'teams': Team.objects.all()
     }
@@ -16,6 +20,7 @@ def teams(request):
 
 
 def about_team(request, team_id):
+    
     context = {
         'team_id': team_id,
         'team': Team.objects.get(id=team_id)

@@ -33,3 +33,9 @@ def signup(request):
         form = SignUpForm()
 
     return render(request, 'user/SignUp.html', {'form': form})
+
+def create_player(request, team_id = -1, tournament_id = -1):
+
+    user = User.authenticate_user(request)
+
+
