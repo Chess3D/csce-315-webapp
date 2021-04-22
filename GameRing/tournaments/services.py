@@ -3,7 +3,7 @@ import requests
 import json
 
 #tournament API GET
-#returns a list of dictonaries, i think
+#returns a list of dictionaries, i think
 def get_tournaments():
     url = 'https://api.challonge.com/v1/tournaments/'
     r = requests.get(url, headers={'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp'})
@@ -12,6 +12,7 @@ def get_tournaments():
     for i  in range(len(tournaments['tournament'])):
         tournament_list.append(tournaments['tournament'][i])
     return tournament_list
+
 
 #tournament API POST
 #parameters is a dictionary
@@ -33,12 +34,14 @@ def create_tournament(parameters):
     r = requests.post(url, data)
     return r.json()
 
+
 #tournament API DELETE
 #returns a json object
 def delete_tournament(tournamentid):
     url = 'https://api.challonge.com/v1/tournaments/' + tournamentid + '.json'
     r = requests.delete(url)
     return r.json()
+
 
 #tournament API PUT
 #update tournament information
@@ -50,4 +53,3 @@ def update_tournament(tournamentid, fields, updated_values):
         data[fields[i]] = updated_values[i]
     r = requests.put(url, data)
     return r.json()
-

@@ -36,7 +36,6 @@ def about_team(request, tournament_id):
 
 
 def join_tournament(request, team_id, tournament_id):
-    
     new_team = Team.objects.get(id=team_id)
 
     context = {
