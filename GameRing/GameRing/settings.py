@@ -32,10 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tournaments.apps.TournamentsConfig',
-    'scrims.apps.ScrimsConfig',
-    'teams.apps.TeamsConfig',
-    'user.apps.UserConfig',
+    'GameRing_mod.apps.GameRingConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
