@@ -51,7 +51,7 @@ def delete_tournament(tournamentid):
 def update_tournament(tournamentid, fields, updated_values): #this needs to be reworked I think
     url = 'https://api.challonge.com/v1/tournaments/' + tournamentid + '.json'
     data = {}
-    for i in range(fields):
+    for i in range(fields):l = models.CharFi
         data[fields[i]] = updated_values[i]
     r = requests.put(url, data)
     return r.json()

@@ -8,10 +8,6 @@ TOURNAMENT_TYPE_CHOICES= [
     ('double-Elimination', 'Double Elimination'),
 ]
 
-TOURNAMENT_GAME_CHOICES = [
-    ('league-of-legends', 'League of Legends'),
-    ('valorant', 'Valorant'),
-]
 
 GRAND_FINAL_CHOICES = [
     ('single-match', 'Single Match'),
@@ -27,7 +23,7 @@ TEAM_TYPE_CHOICES = [
 
 class Team(models.Model):
     name = models.CharField("name", max_length=64, unique=True)
-    game = models.CharField("game", max_length=32, choices=TEAM_TYPE_CHOICES, default='league')
+    game = models.CharField("game", max_length=32, default='league of legends')
     ELO = models.BigIntegerField("Hidden ELO", default="500")
     logo = models.ImageField(upload_to='card_images/', default = 'card_images/GameRing.png')
     players = models.ManyToManyField(User)
@@ -49,11 +45,11 @@ class TeamManager(models.Manager):
 
 class Tournament(models.Model):
     name = models.CharField("name", max_length=60)
-    game_name = models.CharField("game_name", max_length=31, choices=TOURNAMENT_GAME_CHOICES, default='league-of-legends')
+    game_name = models.CharField("game_name", max_length=31, default='league of legends')
     tournament_type = models.CharField("tournament_type", max_length=31, choices=TOURNAMENT_TYPE_CHOICES, default='round-robin')
     grand_finals_modifier = models.CharField("grand_finals_modifier", max_length=31, choices=GRAND_FINAL_CHOICES, default='single-match')
     url = models.CharField("url", max_length=255, default='coolmathgames.com')
-    signup_cap = models.BigIntegerField("signup_cap")
+    signup_cap = models.IntegerField("signup_cap")
     start_at = models.DateTimeField("start_at")
     hold_third_place_match = models.BooleanField("hold_third_place_match", default=True)
     show_rounds = models.BooleanField("show_rounds", default=True)
