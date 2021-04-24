@@ -12,19 +12,19 @@
   </form>
 
   {% if in_tournament %}
-  <h1 class="mb-3">My Tournament</h1>
-  
-  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
-      <div class="col">
-        <div class="card mb-3 h-100 position-relative">
+    <h1 class="mb-3">My Tournament</h1>
+    
+    <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+        <div class="col">
+          <div class="card mb-3 h-100 position-relative">
 
-          <div class="card-body">
-            <h5 class="card-title">{{ my_tournament.name }}</h5>
+            <div class="card-body">
+              <h5 class="card-title">{{ my_tournament.name }}</h5>
+            </div>
+            <a href="./{{ my_tournament.id }}" class="stretched-link"></a>
           </div>
-          <a href="./{{ my_tournament.id }}" class="stretched-link"></a>
         </div>
-      </div>
-  </div>
+    </div>
   {% endif %}
 
   <h1 class="mb-3">Upcoming Tournaments</h1>

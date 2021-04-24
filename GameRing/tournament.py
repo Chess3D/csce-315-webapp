@@ -15,8 +15,8 @@ def tournaments():
 
     in_tournament = False
     my_tournament = None
-    
-    if current_user.team_id:
+
+    if current_user.is_authenticated and current_user.team_id:
         my_team = Team.query.get(current_user.team_id)
 
         if my_team.tournament_id:
