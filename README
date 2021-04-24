@@ -1,0 +1,9 @@
+# Setup
+export FLASK_APP=GameRing
+export FLASK_DEBUG=1
+
+# Database Setup
+python
+from GameRing import db, create_app
+db.create_all(app=create_app())
+exit()

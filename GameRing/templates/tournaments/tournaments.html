@@ -1,0 +1,51 @@
+<!-- templates/profile.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="tournaments m-3">
+  <form class="input-group mb-3" method="POST" action="{{ url_for('tournament.search') }}">
+    <span class="input-group-text" id="basic-addon1">Search</span>
+    <input type="search" class="form-control" placeholder="Browse Tournaments" aria-label="Browse Tournaments" aria-describedby="basic-addon1" id="searchInput" name="search">
+    <input type="submit" style="display: none"/>
+  </form>
+
+  <h1 class="mb-3">My Tournaments</h1>
+  
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h1 class="mb-3">Upcoming Tournaments</h1>
+
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Create Tournament Button -->
+<div class="fixed-bottom m-3">
+  <a class="btn btn-primary btn-lg float-end" href="{{ url_for('tournament.create') }}" role="button" width="40">New Tournament</a>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!-- templates/scrims.html -->
+
+{% extends "base.html" %}
+
+
+<!-- Tournaments work in progress -->
+{% block content %}
+<div class="tournaments m-3">
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Search</span>
+    <input type="text" class="form-control" placeholder="Browse Tournaments" aria-label="Browse Tournaments" aria-describedby="basic-addon1">
+  </div>
+
+  <h1 class="mb-3">My Tournaments</h1>
+  
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+          <img src="{{ tournament.image.url }}" alt="Tournament Logo">
+
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+            <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h1 class="mb-3">Upcoming Tournaments</h1>
+
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% for tournament in tournaments %}
+      <div class="col">
+        <div class="card mb-3 h-100 position-relative">
+          <img src="{{ tournament.image.url }}" alt="Tournament Logo">
+
+          <div class="card-body">
+            <h5 class="card-title">{{ tournament.name }}</h5>
+            <p class="card-text">{{ tournament.tournamentDescription }}</p>
+          </div>
+          <a href="./{{ tournament.id }}" class="stretched-link"></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+<!-- Create Tournament Button -->
+<div class="fixed-bottom m-3">
+  <a class="btn btn-primary btn-lg float-end" href="./create" role="button" width="40">New Tournament</a>
+</div>
+
+{% endblock content %}
