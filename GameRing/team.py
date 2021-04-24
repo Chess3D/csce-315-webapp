@@ -32,13 +32,50 @@ def search():
     return render_template('teams/search.html', teams=teams)
 
 
+# ABOUT
+@team.route('/team/<string:teamID>')
+def about(teamID):
+    this_team = Team.query.get(teamID)
+    on_team = False
+
+    current_team = False
+
+    if current_user.is_authenticated and current_user.team_id:
+        on_team = True
+        current_team = (current_user.team_id == this_team.id)
+        print(current_team)
+
+    return render_template('teams/about.html', team=this_team, on_team=on_team, current_team=current_team)
+
+
+@team.route('/team/<string:teamID>', methods=['POST'])
+@login_required
+def about_post(teamID):
+    on_team = False
+
+    if current_user.is_authenticated and current_user.team_id:
+        on_team = True
+
+    if not on_team:
+        current_user.team_id = teamID
+    else:
+        current_user.team_id = None
+
+    db.session.commit()
+
+
+    return redirect(url_for('team.teams'))
+
+
 # CREATE
 @team.route('/team/create')
+@login_required
 def create():
     return render_template('teams/create.html')
 
 
 @team.route('/team/create', methods=['POST'])
+@login_required
 def create_post():
     name = request.form.get('name')
 
