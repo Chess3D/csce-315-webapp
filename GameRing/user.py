@@ -6,6 +6,6 @@ from .models import User
 user = Blueprint('user', __name__)
 
 
-@user.route('/user')
-def about():
+# @user.route('/user')
+# def about():
     

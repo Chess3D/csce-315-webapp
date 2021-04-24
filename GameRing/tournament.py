@@ -11,7 +11,19 @@ tournament = Blueprint('tournament', __name__)
 # HOME
 @tournament.route('/tournaments')
 def tournaments():
-    return render_template('tournaments/tournaments.html', tournaments=Tournament.query.all())
+    all_tournaments = Tournament.query.all()
+
+    in_tournament = False
+    my_tournament = None
+    
+    if current_user.team_id:
+        my_team = Team.query.get(current_user.team_id)
+
+        if my_team.tournament_id:
+            my_tournament = Tournament.query.get(my_team.tournament_id)
+            in_tournament = True
+
+    return render_template('tournaments/tournaments.html', tournaments=all_tournaments, my_tournament=my_tournament, in_tournament=in_tournament)
 
 
 # SEARCH
