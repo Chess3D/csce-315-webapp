@@ -1,14 +1,13 @@
-<!-- templates/tournaments/create.html -->
-
+<!-- templates/teams/create.html -->
 
 {% extends "base.html" %}
 
 {% block content %}
 <div class="m-3">
-  <form method="POST" action="{{ url_for('tournament.create') }}">
+  <form method="POST" action="{{ url_for('team.create') }}">
     <div class="mb-3">
       <label for="nameInput" class="form-label">Name</label>
-      <input type="text" class="form-control" id="nameInput" name="name">
+      <input type="name" class="form-control" id="nameInput" name="name">
     </div>
     
     <!-- <div class="mb-3">

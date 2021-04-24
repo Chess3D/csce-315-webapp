@@ -58,4 +58,3 @@ def create_post():
 
     return redirect(url_for('tournament.tournaments'))
 
-
