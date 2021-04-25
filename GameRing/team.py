@@ -43,7 +43,6 @@ def about(teamID):
     if current_user.is_authenticated and current_user.team_id:
         on_team = True
         current_team = (current_user.team_id == this_team.id)
-        print(current_team)
 
     return render_template('teams/about.html', team=this_team, on_team=on_team, current_team=current_team)
 

@@ -1,8 +1,29 @@
 <!-- templates/tournaments/about.html -->
 
-
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{team.name}}</h1>
+<h1>{{ tournament.name }}</h1>
+
+{% for team in tournament.teams %}
+    <h1>{{ team.name }}</h1>
+{% endfor %}
+
+<!-- Join Team Button -->
+{% if current_user.is_authenticated %}
+{% if on_team %}
+    {% if not in_tournament %}
+        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
+        </div>
+    {% endif %}
+
+    {% if current_tournament %}
+        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
+        </div>
+    {% endif %}
+{% endif %}
+{% endif %}
+
 {% endblock %}

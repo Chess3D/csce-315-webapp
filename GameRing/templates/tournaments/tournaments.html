@@ -15,16 +15,13 @@
   {% if in_tournament %}
     <h1 class="mb-3">My Tournament</h1>
     
-    <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
-        <div class="col">
-          <div class="card mb-3 h-100 position-relative">
-
-            <div class="card-body">
-              <h5 class="card-title">{{ my_tournament.name }}</h5>
-            </div>
-            <a href="./{{ my_tournament.id }}" class="stretched-link"></a>
-          </div>
+    <div class="col">
+      <div class="card mb-3 h-100 position-relative">
+        <div class="card-body">
+          <h5 class="card-title">{{ my_tournament.name }}</h5>
         </div>
+        <a href="{{ url_for('tournament.about', tournamentID=my_tournament.id) }}" class="stretched-link"></a>
+      </div>
     </div>
   {% endif %}
 
@@ -34,11 +31,10 @@
     {% for tournament in tournaments %}
       <div class="col">
         <div class="card mb-3 h-100 position-relative">
-
           <div class="card-body">
             <h5 class="card-title">{{ tournament.name }}</h5>
           </div>
-          <a href="./{{ tournament.id }}" class="stretched-link"></a>
+          <a href="{{ url_for('tournament.about', tournamentID=tournament.id) }}" class="stretched-link"></a>
         </div>
       </div>
     {% endfor %}
@@ -46,7 +42,10 @@
 </div>
 
 <!-- Create Tournament Button -->
+{% if current_user.is_authenticated %}
 <div class="fixed-bottom m-3">
   <a class="btn btn-primary btn-lg float-end" href="{{ url_for('tournament.create') }}" role="button" width="40">New Tournament</a>
 </div>
+{% endif %}
+
 {% endblock %}

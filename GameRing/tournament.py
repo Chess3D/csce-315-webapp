@@ -35,6 +35,53 @@ def search():
     return render_template('tournaments/search.html', tournaments=tournaments)
 
 
+# ABOUT
+@tournament.route('/tournament/<string:tournamentID>')
+def about(tournamentID):
+    this_tournament = Tournament.query.get(tournamentID)
+
+    on_team = False
+    in_tournament = False
+
+    current_tournament = False
+
+    if current_user.is_authenticated and current_user.team_id:
+        team = Team.query.get(current_user.team_id)
+        on_team = True
+
+        if team.tournament_id:
+            in_tournament = True
+            current_tournament = (team.tournament_id == this_tournament.id)
+
+    return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team)
+
+
+@tournament.route('/tournament/<string:tournamentID>', methods=['POST'])
+@login_required
+def about_post(tournamentID):
+    on_team = False
+    in_tournament = False
+
+    team = None
+
+    if current_user.is_authenticated and current_user.team_id:
+        on_team = True
+        team = Team.query.get(current_user.team_id)
+
+        if team.tournament_id:
+            in_tournament = True
+
+    if on_team:
+        if not in_tournament:
+            team.tournament_id = tournamentID
+        else:
+            team.tournament_id = None
+
+        db.session.commit()
+
+    return redirect(url_for('tournament.tournaments'))
+
+
 # CREATE
 @tournament.route('/tournaments/create')
 def create():
