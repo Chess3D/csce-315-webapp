@@ -26,7 +26,10 @@
   {% endif %}
 
   <h1 class="mb-3">Upcoming Tournaments</h1>
-  {% include "tournaments/cards.html" %}
+
+  <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+    {% include "tournaments/cards.html" %}
+  </div>
 </div>
 
 <!-- Create Tournament Button -->

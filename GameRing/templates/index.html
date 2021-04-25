@@ -9,13 +9,13 @@
     <h1>GameRing</h1>
 
     {% if not current_user.is_authenticated %}
-    <p>Are you Ready to Rumble?</p>
-    <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-primary">Login</a>
+      <p>Are you Ready to Rumble?</p>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-primary">Login</a>
     {% endif %}
 
     {% if current_user.is_authenticated %}
-    <p>Get Ready to Rumble!</p>
-    <a href="{{ url_for('tournament.tournaments') }}" class="btn btn-lg btn-primary">Tournaments</a>
+      <p>Get Ready to Rumble!</p>
+      <a href="{{ url_for('tournament.tournaments') }}" class="btn btn-lg btn-primary">Tournaments</a>
     {% endif %}
   </div>
 </body>
