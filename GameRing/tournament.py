@@ -36,7 +36,7 @@ def search():
 
 
 # ABOUT
-@tournament.route('/tournament/<string:tournamentID>')
+@tournament.route('/tournaments/<string:tournamentID>')
 def about(tournamentID):
     this_tournament = Tournament.query.get(tournamentID)
 
@@ -56,7 +56,7 @@ def about(tournamentID):
     return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team)
 
 
-@tournament.route('/tournament/<string:tournamentID>', methods=['POST'])
+@tournament.route('/tournaments/<string:tournamentID>', methods=['POST'])
 @login_required
 def about_post(tournamentID):
     on_team = False

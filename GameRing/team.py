@@ -9,7 +9,7 @@ team = Blueprint('team', __name__)
 
 
 # HOME
-@team.route('/team')
+@team.route('/teams')
 def teams():
     all_teams = Team.query.all()
 
@@ -24,7 +24,7 @@ def teams():
 
 
 # SEARCH
-@team.route('/team/search', methods=['POST'])
+@team.route('/teams/search', methods=['POST'])
 def search():
     search = request.form.get('search')
     teams = Team.query.filter(Team.name.ilike(f'%{search}%'))
@@ -33,7 +33,7 @@ def search():
 
 
 # ABOUT
-@team.route('/team/<string:teamID>')
+@team.route('/teams/<string:teamID>')
 def about(teamID):
     this_team = Team.query.get(teamID)
     on_team = False
@@ -47,7 +47,7 @@ def about(teamID):
     return render_template('teams/about.html', team=this_team, on_team=on_team, current_team=current_team)
 
 
-@team.route('/team/<string:teamID>', methods=['POST'])
+@team.route('/teams/<string:teamID>', methods=['POST'])
 @login_required
 def about_post(teamID):
     on_team = False
@@ -67,13 +67,13 @@ def about_post(teamID):
 
 
 # CREATE
-@team.route('/team/create')
+@team.route('/teams/create')
 @login_required
 def create():
     return render_template('teams/create.html')
 
 
-@team.route('/team/create', methods=['POST'])
+@team.route('/teams/create', methods=['POST'])
 @login_required
 def create_post():
     name = request.form.get('name')
