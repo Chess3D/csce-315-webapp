@@ -18,14 +18,8 @@ def scrims():
     return render_template('scrims/scrims.html')
 
 
-# TEAMS
-@main.route('/teams')
-def teams():
-    return render_template('teams/teams.html')
-
-
-# USER
-@main.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', name=current_user.name)
+# # USER
+# @main.route('/profile')
+# @login_required
+# def profile():
+#     return render_template('profile.html', name=current_user.name)
