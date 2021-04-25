@@ -2,11 +2,13 @@
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
 _libgcc_mutex=0.1=main
-ca-certificates=2021.4.13=h06a4308_1
-certifi=2020.12.5=py39h06a4308_0
+alembic=1.5.8=pyhd8ed1ab_0
+ca-certificates=2020.12.5=ha878542_0
+certifi=2020.12.5=py39hf3d152e_1
 click=7.1.2=pyhd3eb1b0_0
 flask=1.1.2=pyhd3eb1b0_0
 flask-login=0.5.0=py_0
+flask-migrate=2.4.0=py39hde42818_1
 flask-sqlalchemy=2.5.1=pyhd3eb1b0_0
 greenlet=1.0.0=py39h2531618_2
 gunicorn=20.1.0=py39h06a4308_0
@@ -16,13 +18,18 @@ ld_impl_linux-64=2.33.1=h53a641e_7
 libffi=3.3=he6710b0_2
 libgcc-ng=9.1.0=hdf63c60_0
 libstdcxx-ng=9.1.0=hdf63c60_0
+mako=1.1.4=pyh44b312d_0
 markupsafe=1.1.1=py39h27cfd23_0
 ncurses=6.2=he6710b0_1
 openssl=1.1.1k=h27cfd23_0
 pip=21.0.1=py39h06a4308_0
 python=3.9.4=hdb3f193_0
+python-dateutil=2.8.1=py_0
+python-editor=1.0.4=py_0
+python_abi=3.9=1_cp39
 readline=8.1=h27cfd23_0
 setuptools=52.0.0=py39h06a4308_0
+six=1.15.0=pyh9f0ad1d_0
 sqlalchemy=1.4.7=py39h27cfd23_0
 sqlite=3.35.4=hdfb4753_0
 tk=8.6.10=hbc83047_0
