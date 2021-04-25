@@ -3,11 +3,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ team.name }}</h1>
+<h1 style="text-align: center;">{{ team.name }}</h1>
 
-{% for player in team.players %}
-    <h1>{{ player.name }}</h1>
-{% endfor %}
+<h4 style="text-align: center;">Members</h4>
+<ul>
+    {% for player in team.players %}
+
+  
+    <li style="text-align: center;">{{ player.name }}</li>
+    {% endfor %}
+</ul>
+
+<h4 style="text-align: center;">Joined Tournament(s)</h4>
+
+
 
 <!-- Join Team Button -->
 {% if current_user.is_authenticated %}
@@ -22,6 +31,13 @@
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
         </div>
     {% endif %}
+{% else %}
+    <a href="{{ url_for('team.teams') }}" class="btn btn-primary btn-lg float-end">Go back</a>
+
 {% endif %}
+<form class="input-form m-3"  action="{{ url_for('team.teams') }}">
+    <input class="btn btn-primary btn-lg float-left" role="button" width="40"  type="submit"  name="action" value="Go back"></a>
+</div>
+
 
 {% endblock %}
