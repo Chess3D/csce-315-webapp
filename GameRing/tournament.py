@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .models import User, Tournament, Team
 from . import db
+import datetime
 
 tournament = Blueprint('tournament', __name__)
 
@@ -91,6 +92,14 @@ def create():
 @tournament.route('/tournaments/create', methods=['POST'])
 def create_post():
     name = request.form.get('name')
+    game_type = request.form.get('game_type')
+    grand_finals_modifier = request.form.get('grand_finals_modifier')
+    signup_cap = request.form.get('signup_cap')
+    start_date = request.form.get('start_date')
+    start_time = request.form.get('start_time')
+    hold_third_place_match = request.form.get('third_place_match')
+    show_rounds = request.form.get('show_rounds')
+    description = request.form.get('description')
 
     if Tournament.query.filter_by(name=name).first(): 
         flash('Tournament already exists')
@@ -99,6 +108,24 @@ def create_post():
     
     tournament = Tournament()
     tournament.name = name
+    tournament.game_type = game_type
+    tournament.grand_finals_modifier = grand_finals_modifier
+    tournament.signup_cap = signup_cap
+    
+    print(start_date)
+    print(start_time)
+    date_time = f'{start_date}T{start_time}'
+    #date_time_obj = datetime.datetime.strptime(date_time, '%Y-%m-%d %H:%M')
+    print(date_time)
+    
+    tournament.start_at = date_time
+    if hold_third_place_match == 'on':
+        tournament.hold_third_place_match = True
+
+    if show_rounds == 'on':
+        tournament.show_rounds = True
+    
+    tournament.description = description
 
     db.session.add(tournament)
     db.session.commit()

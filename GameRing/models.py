@@ -25,6 +25,15 @@ class Team(db.Model):
 class Tournament(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     name = db.Column(db.String(100))
-    
+    game_type = db.Column(db.String(100))
+    grand_finals_modifier = db.Column(db.String(100))
+    url = db.Column(db.String(255), default='coolmathgames.com')
+    signup_cap = db.Column(db.Integer)
+    start_at = db.Column(db.String(100))
+    hold_third_place_match = db.Column(db.Boolean, default=False)
+    show_rounds = db.Column(db.Boolean, default=False)
+    description = db.Column(db.String(255))
+    creator = db.Column(db.String(150), default="Jim")
     teams = db.relationship('Team', backref='tournament', lazy=True)
+
     
