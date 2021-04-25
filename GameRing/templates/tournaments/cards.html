@@ -1,0 +1,13 @@
+<div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
+  {% for tournament in tournaments %}
+    <div class="col">
+      <div class="card mb-3 h-100 position-relative">
+        <div class="card-body">
+          <h5 class="card-title">{{ tournament.name }}</h5>
+        </div>
+        
+        <a href="{{ url_for('tournament.about', tournamentID=tournament.id) }}" class="stretched-link"></a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
