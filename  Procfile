@@ -1,1 +1,1 @@
-web: gunicorn GameRing.wsgi.py
+web: gunicorn GameRing.wsgi
