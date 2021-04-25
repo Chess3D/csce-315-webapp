@@ -31,13 +31,5 @@
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
         </div>
     {% endif %}
-{% else %}
-    <a href="{{ url_for('team.teams') }}" class="btn btn-primary btn-lg float-end">Go back</a>
-
 {% endif %}
-<form class="input-form m-3"  action="{{ url_for('team.teams') }}">
-    <input class="btn btn-primary btn-lg float-left" role="button" width="40"  type="submit"  name="action" value="Go back"></a>
-</div>
-
-
 {% endblock %}
