@@ -1,5 +1,9 @@
 import os
+from . import create_app
+
 os.environ.setdefault("FLASK_APP", "GameRing")
 
-from flask import Flask
-app = Flask(__name__)
+app = create_app()
+
+if __name__ == "__main__":
+    app.run()
