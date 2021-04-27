@@ -13,6 +13,8 @@ class User(UserMixin, db.Model):
 
     password = db.Column(db.String(100))
 
+    is_captian = db.Column(db.Boolean(), default=False)
+
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
 

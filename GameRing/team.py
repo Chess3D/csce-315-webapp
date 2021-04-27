@@ -62,12 +62,19 @@ def about_post(teamID):
 
     # Leave team
     else:
-        # Current player is only player
         team = Team.query.get(teamID)
+
+        # Current player is only player
         if len(team.players) == 1:
             flash(f'Team "{team.name}" has been removed')
             db.session.delete(team)
-
+        else:
+            for player in team.players:
+                if not player.is_captian:
+                    User.query.get(player.id).is_captian = True
+                    break
+       
+        current_user.is_captian = False
         current_user.team_id = None
 
     db.session.commit()
@@ -116,6 +123,7 @@ def create_post():
     db.session.commit()
 
     current_user.team_id = team.id
+    current_user.is_captian = True
     db.session.commit()
 
     return redirect(url_for('team.teams'))

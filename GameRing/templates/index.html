@@ -14,8 +14,13 @@
     {% endif %}
 
     {% if current_user.is_authenticated %}
-      <p>Get Ready to Rumble!</p>
-      <a href="{{ url_for('tournament.tournaments') }}" class="btn btn-lg btn-primary">Tournaments</a>
+      {% if not current_user.team_id %}
+        <p>Get Ready to Rumble!</p>
+        <a href="{{ url_for('team.teams') }}" class="btn btn-lg btn-primary">Teams</a>
+      {% else %}
+        <p>Get Ready to Rumble!</p>
+        <a href="{{ url_for('tournament.tournaments') }}" class="btn btn-lg btn-primary">Tournaments</a>
+      {% endif %}
     {% endif %}
   </div>
 </body>
