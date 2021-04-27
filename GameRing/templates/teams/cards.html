@@ -1,0 +1,10 @@
+{% for team in teams %}
+  <div class="col">
+    <div class="card mb-3 h-100 position-relative">
+      <div class="card-body">
+        <h5 class="card-title">{{ team.name }}</h5>
+      </div>
+      <a href="{{ url_for('team.about', teamID=team.id) }}" class="stretched-link"></a>
+    </div>
+  </div>
+{% endfor %}
