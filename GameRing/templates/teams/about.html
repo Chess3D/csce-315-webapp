@@ -8,9 +8,7 @@
 <h4 style="text-align: center;">Members</h4>
 <ul>
     {% for player in team.players %}
-
-  
-    <li style="text-align: center;">{{ player.name }}</li>
+        <li style="text-align: center;">{{ player.riotID }} #{{ player.tagline }}</li>
     {% endfor %}
 </ul>
 

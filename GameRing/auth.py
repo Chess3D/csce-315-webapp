@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User
+from .services import verify_account
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -39,9 +40,10 @@ def signup():
 
 @auth.route('/sign-up', methods=['POST'])
 def signup_post():
-
+    
     email = request.form.get('email')
-    username = request.form.get('username')
+    riotID = request.form.get('riotID')
+    tagline = request.form.get('tagline')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
 
@@ -51,12 +53,16 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
 
+    if not verify_account(riotID, tagline):
+        flash('Invalid RiotID and tagline')
+        return redirect(url_for('auth.signup'))
+
     if (password1 != password2):
         flash('Passwords do not match')
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=username, password=generate_password_hash(password1, method='sha256'))
+    new_user = User(email=email, riotID=riotID, tagline=tagline, password=generate_password_hash(password1, method='sha256'))
 
     # add the new user to the database
     db.session.add(new_user)

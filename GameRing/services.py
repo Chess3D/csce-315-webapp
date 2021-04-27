@@ -56,8 +56,10 @@ def delete_tournament(tournamentID):
 def update_tournament(tournamentID, fields, updated_values): #this needs to be reworked I think
     url = 'https://api.challonge.com/v1/tournaments/' + tournamentID + '.json'
     data = {}
-    for i in range(fields):l = models.CharFi
+    
+    for i in range(fields):
         data[fields[i]] = updated_values[i]
+    
     r = requests.put(url, data)
     return r.json()
 
@@ -78,6 +80,7 @@ def get_participants(tournamentURL):
         participant_list.append(participants['participant'][i])
     return participant_list
 
+
 #participants API GET
 #requires tournament url and participant id
 #returns a single participant as a dictionary
@@ -85,6 +88,7 @@ def get_participant(tournamentURL, participantID):
     url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/' + participantID + '.json'
     r = requests.get(url)
     return r.json()
+
 
 #participants API POST
 #parameters is a dictionary, currently only contains name of the participant

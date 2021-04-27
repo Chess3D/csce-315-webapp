@@ -12,10 +12,10 @@ def index():
     return render_template('index.html')
 
 
-# SCRIMS
-@main.route('/scrims')
-def scrims():
-    return render_template('scrims/scrims.html')
+# # SCRIMS
+# @main.route('/scrims')
+# def scrims():
+#     return render_template('scrims/scrims.html')
 
 
 # # USER
