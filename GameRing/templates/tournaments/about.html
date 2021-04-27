@@ -32,5 +32,10 @@
     {% endif %}
 {% endif %}
 {% endif %}
+{% if tournament.payment %}
+    <p style="text-align: center;"><b>Buy in:</b> Yes</p>
+{% else %}
+    <p style="text-align: center;"><b>Buy in:</b> No</p>
+{% endif %}
 
 {% endblock %}
