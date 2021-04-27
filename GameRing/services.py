@@ -100,6 +100,7 @@ def add_participant(parameters):
     r = requests.post(url, data)
     return r.json()
 
+
 #participants API DELETE
 #if tournament has not started, participant is removed from the tournament
 #if tournament has started, participant is marked as inactive, ff'ing remaining matches
@@ -140,10 +141,9 @@ def get_match_info(matchid):
 def verify_account(gameName, tagLine):
     api_key = 'RGAPI-940a6874-2d97-4823-919c-dd329df7ffc5'
     riot = RiotWatcher(api_key)
+
     try:
-        account_info = riot.account.by_riot_id('americas', gameName, tagLine)
+        riot.account.by_riot_id('americas', gameName, tagLine)
         return True
-    except exceptions.HTTPError:
+    except requests.exceptions.HTTPError:
         return False
-    print(type(account_info))
-    return True
