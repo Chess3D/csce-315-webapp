@@ -1,0 +1,11 @@
+<!-- templates/tournaments/search.html -->
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for team in teams %}
+<h1>{{ team.name }}</h1>
+{% endfor %}
+{% endblock %}

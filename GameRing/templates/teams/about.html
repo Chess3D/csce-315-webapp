@@ -1,0 +1,27 @@
+<!-- templates/teams/about.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ team.name }}</h1>
+
+{% for player in team.players %}
+    <h1>{{ player.name }}</h1>
+{% endfor %}
+
+<!-- Join Team Button -->
+{% if current_user.is_authenticated %}
+    {% if not on_team %}
+        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('team.about', teamID=team.id) }}">
+            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
+        </div>
+    {% endif %}
+
+    {% if current_team %}
+        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('team.about', teamID=team.id) }}">
+            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
