@@ -38,5 +38,6 @@ class Tournament(db.Model):
     description = db.Column(db.String(255))
     creator = db.Column(db.String(150), default="Jim")
     teams = db.relationship('Team', backref='tournament', lazy=True)
+    payment = db.Column(db.Boolean, default=False)
 
     

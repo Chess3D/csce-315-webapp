@@ -45,6 +45,7 @@ def about(tournamentID):
     in_tournament = False
 
     current_tournament = False
+    payment = False
 
     if current_user.is_authenticated and current_user.team_id:
         team = Team.query.get(current_user.team_id)
@@ -54,7 +55,10 @@ def about(tournamentID):
             in_tournament = True
             current_tournament = (team.tournament_id == this_tournament.id)
 
-    return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team)
+    if this_tournament.payment:
+        payment = True
+
+    return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team, payment=payment)
 
 
 @tournament.route('/tournaments/<string:tournamentID>', methods=['POST'])
@@ -100,6 +104,7 @@ def create_post():
     hold_third_place_match = request.form.get('third_place_match')
     show_rounds = request.form.get('show_rounds')
     description = request.form.get('description')
+    payment = request.form.get('payment')
 
     if Tournament.query.filter_by(name=name).first(): 
         flash('Tournament already exists')
@@ -117,6 +122,7 @@ def create_post():
     date_time = f'{start_date}T{start_time}'
     #date_time_obj = datetime.datetime.strptime(date_time, '%Y-%m-%d %H:%M')
     print(date_time)
+    #print(payment)
     
     tournament.start_at = date_time
     if hold_third_place_match == 'on':
@@ -125,10 +131,16 @@ def create_post():
     if show_rounds == 'on':
         tournament.show_rounds = True
     
+    if payment == 'on':
+        tournament.payment = True
+    
     tournament.description = description
 
     db.session.add(tournament)
     db.session.commit()
+
+    #debug
+    print(tournament.payment)
 
     return redirect(url_for('tournament.tournaments'))
 
