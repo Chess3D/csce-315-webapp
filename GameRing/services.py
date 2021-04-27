@@ -133,3 +133,17 @@ def get_match_info(matchid):
     url = 'https://americas.api.riotgames.com/lol/match/v5/matches/' + matchid + '?api_key=' + api_key
     match_info = get(url).json()
     return match_info
+
+
+#Riot API
+#GET Verify account
+def verify_account(gameName, tagLine):
+    api_key = 'RGAPI-940a6874-2d97-4823-919c-dd329df7ffc5'
+    riot = RiotWatcher(api_key)
+    try:
+        account_info = riot.account.by_riot_id('americas', gameName, tagLine)
+        return True
+    except exceptions.HTTPError:
+        return False
+    print(type(account_info))
+    return True
