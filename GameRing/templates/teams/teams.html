@@ -6,6 +6,14 @@
 {% block content %}
 
 <div class="teams m-3">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger" role="alert">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+  {% endwith %}
+
   <form class="input-group mb-3" method="POST" action="{{ url_for('team.search') }}">
     <span class="input-group-text" id="basic-addon1">Search</span>
     <input type="search" class="form-control" placeholder="Browse Teams" aria-label="Browse Teams" aria-describedby="basic-addon1" id="searchInput" name="search">
@@ -14,18 +22,7 @@
 
   {% if in_team %}
     <h1 class="mb-3">My Team</h1>
-    
-    <!-- <div class="row row-cols-1 row-cols-md-6 g-4 mb-3">
-        <div class="col">
-          <div class="card mb-3 h-100 position-relative">
 
-            <div class="card-body">
-              <h5 class="card-title">{{ my_team.name }}</h5>
-            </div>
-            <a href="./{{ my_team.id }}" class="stretched-link"></a>
-          </div>
-        </div>
-    </div> -->
     <div class="col">
       <div class="card mb-3 h-100 position-relative">
 
@@ -46,9 +43,11 @@
 
 <!-- Create Team Button -->
 {% if current_user.is_authenticated %}
+{% if not current_user.team_id %}
 <div class="fixed-bottom m-3">
   <a class="btn btn-primary btn-lg float-end" href="{{ url_for('team.create') }}" role="button" width="40">New Team</a>
 </div>
+{% endif %}
 {% endif %}
 
 {% endblock %}

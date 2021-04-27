@@ -52,12 +52,22 @@ def about(teamID):
 def about_post(teamID):
     on_team = False
 
+    # Currently on the viewed team
     if current_user.is_authenticated and current_user.team_id:
         on_team = True
 
+    # Join team
     if not on_team:
         current_user.team_id = teamID
+
+    # Leave team
     else:
+        # Current player is only player
+        team = Team.query.get(teamID)
+        if len(team.players) == 1:
+            flash(f'Team "{team.name}" has been removed')
+            db.session.delete(team)
+
         current_user.team_id = None
 
     db.session.commit()
@@ -70,6 +80,14 @@ def about_post(teamID):
 @team.route('/teams/create')
 @login_required
 def create():
+    if not current_user.is_authenticated:
+        flash('Must be logged in')
+        return redirect(url_for('team.teams'))
+
+    if current_user.team_id:
+        flash('Cannot create a team while on a team')
+        return redirect(url_for('team.teams'))
+
     return render_template('teams/create.html')
 
 
@@ -77,6 +95,14 @@ def create():
 @login_required
 def create_post():
     name = request.form.get('name')
+
+    if not current_user.is_authenticated:
+        flash('Must be logged in')
+        return redirect(url_for('team.teams'))
+
+    if current_user.team_id:
+        flash('Cannot create a team while on a team')
+        return redirect(url_for('team.teams'))
 
     if Team.query.filter_by(name=name).first(): 
         flash('Team already exists')
@@ -87,6 +113,9 @@ def create_post():
     team.name = name
 
     db.session.add(team)
+    db.session.commit()
+
+    current_user.team_id = team.id
     db.session.commit()
 
     return redirect(url_for('team.teams'))
