@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from .models import User, Tournament, Team
 from . import db
-import datetime
+from datetime import datetime
 
 tournament = Blueprint('tournament', __name__)
 
@@ -99,8 +99,6 @@ def create_post():
     signup_cap = request.form.get('signup_cap')
     start_date = request.form.get('start_date')
     start_time = request.form.get('start_time')
-    hold_third_place_match = request.form.get('third_place_match')
-    show_rounds = request.form.get('show_rounds')
     description = request.form.get('description')
 
     if Tournament.query.filter_by(name=name).first(): 
@@ -114,31 +112,17 @@ def create_post():
     tournament.game_type = game_type
     tournament.grand_finals_modifier = grand_finals_modifier
     tournament.signup_cap = signup_cap
-    
-    # print(start_date)
-    # print(start_time)
+
     date_time_str = f'{start_date} {start_time}'
     date_time = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
 
     tournament.start_at = date_time
-    #date_time_obj = datetime.datetime.strptime(date_time, '%Y-%m-%d %H:%M')
-    print(tournament.start_at)
-    #print(payment)
-    
-    
-    if hold_third_place_match == 'on':
-        tournament.hold_third_place_match = True
-
-    if show_rounds == 'on':
-        tournament.show_rounds = True
     
     tournament.description = description
 
     db.session.add(tournament)
     db.session.commit()
 
-    #debug
-    print(tournament.entry_fee)
 
     return redirect(url_for('tournament.tournaments'))
 
