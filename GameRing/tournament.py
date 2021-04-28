@@ -55,10 +55,7 @@ def about(tournamentID):
             in_tournament = True
             current_tournament = (team.tournament_id == this_tournament.id)
 
-    if this_tournament.payment:
-        payment = True
-
-    return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team, payment=payment)
+    return render_template('tournaments/about.html', tournament=this_tournament, in_tournament=in_tournament, current_tournament=current_tournament, on_team=on_team)
 
 
 @tournament.route('/tournaments/<string:tournamentID>', methods=['POST'])
@@ -96,6 +93,7 @@ def create():
 @tournament.route('/tournaments/create', methods=['POST'])
 def create_post():
     name = request.form.get('name')
+    entry_fee = request.form.get('entry_fee')
     game_type = request.form.get('game_type')
     grand_finals_modifier = request.form.get('grand_finals_modifier')
     signup_cap = request.form.get('signup_cap')
@@ -104,7 +102,6 @@ def create_post():
     hold_third_place_match = request.form.get('third_place_match')
     show_rounds = request.form.get('show_rounds')
     description = request.form.get('description')
-    payment = request.form.get('payment')
 
     if Tournament.query.filter_by(name=name).first(): 
         flash('Tournament already exists')
@@ -113,6 +110,7 @@ def create_post():
     
     tournament = Tournament()
     tournament.name = name
+    tournament.entry_fee = entry_fee
     tournament.game_type = game_type
     tournament.grand_finals_modifier = grand_finals_modifier
     tournament.signup_cap = signup_cap
@@ -131,16 +129,13 @@ def create_post():
     if show_rounds == 'on':
         tournament.show_rounds = True
     
-    if payment == 'on':
-        tournament.payment = True
-    
     tournament.description = description
 
     db.session.add(tournament)
     db.session.commit()
 
     #debug
-    print(tournament.payment)
+    print(tournament.entry_fee)
 
     return redirect(url_for('tournament.tournaments'))
 

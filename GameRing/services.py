@@ -2,6 +2,12 @@ import os
 import requests
 import json
 from riotwatcher import RiotWatcher
+import challonge
+
+KEY = {
+    'riot' : 'RGAPI-0f4c9ac1-13f0-4c5f-937e-d0c918cb015f'
+}
+
 
 '''
 Begin challonge API
@@ -118,7 +124,7 @@ Riot API Begin
 #GET most recent match from Riot ID might change how this works if it's easier
 #returns match id
 def get_match(gameName, tagLine):
-    api_key = 'RGAPI-cbf487de-6523-4f82-83b7-9d9c3f9b3663'
+    api_key = KEY['riot']
     riot = RiotWatcher(api_key)
     account_info = riot.account.by_riot_id('americas', gameName, tagLine)
     puuid = account_info["puuid"]
@@ -126,11 +132,12 @@ def get_match(gameName, tagLine):
     match = get(url).json()
     return match[0]
 
+
 #Riot API
 #GET most recent match information
 #returns dictionary of match information
 def get_match_info(matchid):
-    api_key = 'RGAPI-cbf487de-6523-4f82-83b7-9d9c3f9b3663'
+    api_key = KEY['riot']
     url = 'https://americas.api.riotgames.com/lol/match/v5/matches/' + matchid + '?api_key=' + api_key
     match_info = get(url).json()
     return match_info
@@ -139,7 +146,7 @@ def get_match_info(matchid):
 #Riot API
 #GET Verify account
 def verify_account(gameName, tagLine):
-    api_key = 'RGAPI-940a6874-2d97-4823-919c-dd329df7ffc5'
+    api_key = KEY['riot']
     riot = RiotWatcher(api_key)
 
     try:

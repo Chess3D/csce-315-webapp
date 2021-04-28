@@ -16,6 +16,10 @@
 
 <p style="text-align: center;"><b>About:</b> {{tournament.description}}</p>
 
+<!-- Entry Fee Info -->
+<p style="text-align: center;"><b>Entree Fee:</b>{{ tournament.entry_fee }} USD</p>
+
+
 <!-- Join Tournament Button -->
 {% if current_user.is_authenticated %}
 {% if on_team %}
@@ -31,11 +35,6 @@
         </div>
     {% endif %}
 {% endif %}
-{% endif %}
-{% if tournament.payment %}
-    <p style="text-align: center;"><b>Buy in:</b> Yes</p>
-{% else %}
-    <p style="text-align: center;"><b>Buy in:</b> No</p>
 {% endif %}
 
 {% endblock %}

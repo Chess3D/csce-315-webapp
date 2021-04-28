@@ -54,7 +54,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     if not verify_account(riotID, tagline):
-        flash('Invalid RiotID and tagline')
+        flash('Invalid RiotID')
         return redirect(url_for('auth.signup'))
 
     if (password1 != password2):
