@@ -115,14 +115,17 @@ def create_post():
     tournament.grand_finals_modifier = grand_finals_modifier
     tournament.signup_cap = signup_cap
     
-    print(start_date)
-    print(start_time)
-    date_time = f'{start_date}T{start_time}'
+    # print(start_date)
+    # print(start_time)
+    date_time_str = f'{start_date} {start_time}'
+    date_time = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
+
+    tournament.start_at = date_time
     #date_time_obj = datetime.datetime.strptime(date_time, '%Y-%m-%d %H:%M')
-    print(date_time)
+    print(tournament.start_at)
     #print(payment)
     
-    tournament.start_at = date_time
+    
     if hold_third_place_match == 'on':
         tournament.hold_third_place_match = True
 
