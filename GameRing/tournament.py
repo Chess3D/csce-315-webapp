@@ -6,6 +6,8 @@ from .models import User, Tournament, Team
 from . import db
 from datetime import datetime
 
+from .services import create_tournament as challonge_create
+
 tournament = Blueprint('tournament', __name__)
 
 
@@ -93,35 +95,65 @@ def create():
 @tournament.route('/tournaments/create', methods=['POST'])
 def create_post():
     name = request.form.get('name')
-    entry_fee = request.form.get('entry_fee')
-    game_type = request.form.get('game_type')
+    tournament_type = request.form.get('tournament_type')
     grand_finals_modifier = request.form.get('grand_finals_modifier')
     signup_cap = request.form.get('signup_cap')
+    description = request.form.get('description')
+
+    settings = {
+        'name' : name,
+        'url' : None,
+        'game_name' : 'League of Legends',
+        'tournament_type' : tournament_type,
+        'grand_finals_modifier' : grand_finals_modifier,
+        'signup_cap' : signup_cap,
+        'description' : description,
+    }
+
+    if Tournament.query.filter_by(name=name).first():
+        flash('Tournament "{name}" already exists')
+        return redirect(url_for('tournament.create'))
+
+    if int(signup_cap) < 2:
+        flash('Invalid signup capcity')
+        return redirect(url_for('tournament.create'))
+
+    # Format the start time
     start_date = request.form.get('start_date')
     start_time = request.form.get('start_time')
-    description = request.form.get('description')
+    
+    start_time_str = f'{start_date} {start_time}'
+    start_at = datetime.strptime(start_time_str, '%Y-%m-%d %H:%M')
+
+    if start_at < datetime.now():
+        flash('Invalid start time')
+        return redirect(url_for('tournament.create'))
+
+    entry_fee = request.form.get('entry_fee')
 
     if Tournament.query.filter_by(name=name).first(): 
         flash('Tournament already exists')
         return redirect(url_for('tournament.create'))
 
-    
+    # Add tournament to challonge
+    challonge_id = challonge_create(**settings)
+
+    # Add tournament to database
     tournament = Tournament()
+    tournament.challonge_id = challonge_id
     tournament.name = name
     tournament.entry_fee = entry_fee
-    tournament.game_type = game_type
-    tournament.grand_finals_modifier = grand_finals_modifier
+    tournament.tournament_type = tournament_type
     tournament.signup_cap = signup_cap
 
-    date_time_str = f'{start_date} {start_time}'
-    date_time = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
-
-    tournament.start_at = date_time
+    tournament.start_at = start_at
     
     tournament.description = description
 
     db.session.add(tournament)
     db.session.commit()
+
+
 
 
     return redirect(url_for('tournament.tournaments'))

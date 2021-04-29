@@ -4,14 +4,21 @@ import json
 from riotwatcher import RiotWatcher
 import challonge
 
-KEY = {
-    'riot' : 'RGAPI-0f4c9ac1-13f0-4c5f-937e-d0c918cb015f'
+API_USERS = {
+    'challonge' : 'GigaV9',
 }
+
+API_KEYS = {
+    'riot' : 'RGAPI-0f4c9ac1-13f0-4c5f-937e-d0c918cb015f',
+    'challonge' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
+}
+
 
 
 '''
 Begin challonge API
 '''
+
 
 #tournament API GET
 #returns a list of dictionaries, i think
@@ -22,30 +29,17 @@ def get_tournaments():
     tournament_list = []
     for i  in range(len(tournaments['tournament'])):
         tournament_list.append(tournaments['tournament'][i])
+    
     return tournament_list
 
 
 #tournament API POST
 #parameters is a dictionary
 #returns a dictionary
-def create_tournament(parameters):
-    url = 'https://api.challonge.com/v1/tournaments.json'
-    data = {'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
-            'name' : parameters['name'],
-            'game_name' : parameters['game_name'],
-            'tournament_type' : parameters['tournament_type'],
-            'grand_finals_modifier' : parameters['grand_finals_modifier'],
-            'signup_cap' : parameters['signup_cap'],
-            'start_at' : parameters['start_at'],
-            'hold_third_place_match' : parameters['hold_third_place_match'],
-            'show_rounds' : parameters['show_rounds'],
-            'private' : 'true',
-            'description' : parameters['description'],
-            'notify_users_when_matches_open' : 'false',
-            'notify_users_when_the_tournament_ends' : 'false'
-            }
-    r = requests.post(url, data)
-    return r.json()
+def create_tournament(**parameters):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    print(parameters['url'])
+    return challonge.tournaments.create(**parameters)['id']
 
 
 #tournament API DELETE
@@ -124,7 +118,7 @@ Riot API Begin
 #GET most recent match from Riot ID might change how this works if it's easier
 #returns match id
 def get_match(gameName, tagLine):
-    api_key = KEY['riot']
+    api_key = API_KEYS['riot']
     riot = RiotWatcher(api_key)
     account_info = riot.account.by_riot_id('americas', gameName, tagLine)
     puuid = account_info["puuid"]
@@ -137,7 +131,7 @@ def get_match(gameName, tagLine):
 #GET most recent match information
 #returns dictionary of match information
 def get_match_info(matchid):
-    api_key = KEY['riot']
+    api_key = API_KEYS['riot']
     url = 'https://americas.api.riotgames.com/lol/match/v5/matches/' + matchid + '?api_key=' + api_key
     match_info = get(url).json()
     return match_info
@@ -146,7 +140,7 @@ def get_match_info(matchid):
 #Riot API
 #GET Verify account
 def verify_account(gameName, tagLine):
-    api_key = KEY['riot']
+    api_key = API_KEYS['riot']
     riot = RiotWatcher(api_key)
 
     try:

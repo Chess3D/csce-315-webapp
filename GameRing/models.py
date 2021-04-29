@@ -30,9 +30,9 @@ class Team(db.Model):
 class Tournament(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
 
-    name = db.Column(db.String(100))
-    game_type = db.Column(db.String(100))
-    grand_finals_modifier = db.Column(db.String(100))
+    challonge_id = db.Column(db.Integer, unique=True)
+    name = db.Column(db.String(100), unique=True)
+    tournament_type = db.Column(db.String(100))
     signup_cap = db.Column(db.Integer)
     start_at = db.Column(db.DateTime)
     description = db.Column(db.String(255))
