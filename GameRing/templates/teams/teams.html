@@ -24,10 +24,11 @@
     <h1 class="mb-3">My Team</h1>
 
     <div class="col">
-      <div class="card mb-3 h-100 position-relative">
+      <div class="card mb-3 h-100 position-relative bg-secondary text-white">
 
         <div class="card-body">
-          <h5 class="card-title">{{ my_team.name }}</h5>
+          <h5 class="card-title"><strong>{{ my_team.name }}</strong></h5>
+          <!--<p>Joined Tournament ID: <span style="color:gold"> {{my_team.tournament_id}}</span> -->
         </div>
         <a href="{{ url_for('team.about', teamID=my_team.id) }}" class="stretched-link"></a>
       </div>
