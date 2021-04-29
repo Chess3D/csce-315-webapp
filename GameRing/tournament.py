@@ -138,7 +138,7 @@ def create_post():
         return redirect(url_for('tournament.create'))
 
     # Add tournament to challonge
-    challonge_id = create_tournament(**settings)
+    challonge_id = create_tournament(**settings)['id']
     challonge_url = get_tournament(challonge_id)['url']
 
     # Add tournament to database

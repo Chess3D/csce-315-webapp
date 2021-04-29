@@ -24,6 +24,7 @@ NOTE: There is a tournament ID and a tournament URL.
       Many of these commands use the tournament URL.
 '''
 #tournament API GET
+#this can take tournament_id or tournament_url as an argument
 #returns a list of tournament dictionaries
 def get_tournament(tournament_url):
     challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
@@ -35,7 +36,7 @@ def get_tournament(tournament_url):
 def create_tournament(**parameters):
     challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
     print(parameters['url'])
-    return challonge.tournaments.create(**parameters)['id']
+    return challonge.tournaments.create(**parameters)
 
 #tournament API DELETE
 #returns a dictionary of tournament information
