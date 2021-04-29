@@ -16,11 +16,20 @@
     <h1 class="mb-3">My Tournament</h1>
     
     <div class="col">
-      <div class="card mb-3 h-100 position-relative">
+      <div class="card mb-3 h-100 position-relative bg-secondary text-white">
         <div class="card-body">
-          <h5 class="card-title">{{ my_tournament.name }}</h5>
+          <h5 class="card-title"><strong>{{ my_tournament.name }}</strong></h5>
+          <p>Starts at: <span style="color:yellow">{{my_tournament.start_at}}</span></p>
+          <p>Joined Teams:
+            <ul>
+              {% for team in my_tournament.teams %}
+                  <li>{{team.name }} </li>
+              {% endfor %}
+          </ul>
+          </p>
         </div>
         <a href="{{ url_for('tournament.about', tournamentID=my_tournament.id) }}" class="stretched-link"></a>
+
       </div>
     </div>
   {% endif %}

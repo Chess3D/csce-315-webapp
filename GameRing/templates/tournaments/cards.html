@@ -1,9 +1,14 @@
 {% for tournament in tournaments %}
 <div class="col">
+<<<<<<< HEAD
+  <div class="card mb-3 h-100 position-relative text-white bg-dark">
+    
+=======
   <div class="card mb-3 h-100 position-relative text-white bg-secondary">
+>>>>>>> ecdc4ed5551f41fb2c1495206cafe2ca120e3a79
     <div class="card-body">
-      <h5 class="card-title">{{ tournament.name }}</h5>
-      <p>Starts at {{tournament.start_date}}</p>
+      <h5 class="card-title"><strong>{{ tournament.name }}</strong></h5>
+      <p>Starts at: <span style="color:yellow">{{tournament.start_at}}</span></p>
     </div>
     <a href="{{ url_for('tournament.about', tournamentID=tournament.id) }}" class="stretched-link"></a>
   </div>
