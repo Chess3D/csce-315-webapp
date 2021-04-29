@@ -19,13 +19,15 @@ API_KEYS = {
 Begin challonge API
 '''
 
-
+'''
+NOTE: There is a tournament ID and a tournament URL.
+      Many of these commands use the tournament URL.
+'''
 #tournament API GET
-#returns a list of dictionaries, i think
-def get_tournament(tournament_id):
+#returns a list of tournament dictionaries
+def get_tournament(tournament_url):
     challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
-    return challonge.tournaments.show(tournament_id)
-
+    return challonge.tournaments.show(tournament_url)
 
 #tournament API POST
 #parameters is a dictionary
@@ -35,27 +37,61 @@ def create_tournament(**parameters):
     print(parameters['url'])
     return challonge.tournaments.create(**parameters)['id']
 
-
 #tournament API DELETE
 #returns a dictionary of tournament information
-def delete_tournament(tournamentID):
-    url = 'https://api.challonge.com/v1/tournaments/' + tournamentID + '.json'
-    r = requests.delete(url)
-    return r.json()
-
+def delete_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.destroy(tournament_url)
 
 #tournament API PUT
 #update tournament information
 #returns dictionary of tournament information
-def update_tournament(tournamentID, fields, updated_values): #this needs to be reworked I think
-    url = 'https://api.challonge.com/v1/tournaments/' + tournamentID + '.json'
-    data = {}
-    
-    for i in range(fields):
-        data[fields[i]] = updated_values[i]
-    
-    r = requests.put(url, data)
-    return r.json()
+def update_tournament(tournament_url, **params):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.update(tournament_url, **params)
+
+#tournament API POST
+#processes checkins
+#this should be done before the tournament starts, but after the checkin window
+#This marks participants who have not checked in as inactive
+#This moves inactive participants to bottom seeds
+#This transitions the tournament state from checking_in to checked_in
+#might return tournament information
+def process_checkins_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.process_check_ins(tournament_url)
+
+#tournament API POST
+#aborts tournament check in process
+#this is the only way to edit the start_at or check_in_duration
+#might return tournament information
+def abort_checkin_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.abort_check_in(tournament_url)
+
+#tournament API POST
+#starts the tournament
+#the tournament must have at least 2 participants
+#might return tournament information
+def start_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.start(tournament_url)
+
+#tournament API POST
+#finalize tournament results
+#must have all match scores submitted, renders results permanent
+#might return tournament information
+def finalize_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.finalize(tournament_url)
+
+#tournament API POST
+#clears all scores and attatchments
+#participants can be added, edited, or removed after it is cleared.
+#might return tournament information
+def reset_tournament(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.reset(tournament_url)
 
 '''
 NOTE: What is referred to as a 'participant' is a team.
@@ -64,25 +100,16 @@ NOTE: What is referred to as a 'participant' is a team.
 
 #participants API GET
 #returns a list of participants and their information for a single tournament
-def get_participants(tournamentURL):
-    url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/participants.json'
-    r = requests.get(url, headers={'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp'})
-    participants = r.json()
-    participant_list = []
-
-    for i  in range(len(participants['participant'])):
-        participant_list.append(participants['participant'][i])
-    return participant_list
-
+def get_participants(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.index(tournament_url)
 
 #participants API GET
 #requires tournament url and participant id
 #returns a single participant as a dictionary
-def get_participant(tournamentURL, participant_id):
-    url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/' + participant_id + '.json'
-    r = requests.get(url)
-    return r.json()
-
+def get_participant(tournament_url, participant_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.show(tournament_url, participant_id)
 
 #participants API POST
 #parameters is a dictionary, currently only contains name of the participant
@@ -91,16 +118,82 @@ def add_participant(tournament_url, participant_name):
     challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
     return challonge.participants.create(tournament_url, participant_name)
 
-
 #participants API DELETE
 #if tournament has not started, participant is removed from the tournament
 #if tournament has started, participant is marked as inactive, ff'ing remaining matches
 #returns dictionary of participant information
-def remove_participant(tournamentURL, participantID):
-    url = url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/' + participantID + '.json'
-    r = requests.delete(url)
-    return r.json()
+def remove_participant(tournament_url, participant_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.destroy(tournament_url, participant_id)
 
+#participants API POST
+#sets checked_in_at to current time
+#might return participant details
+def checkin_participant(tournament_url, participant_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.check_in(tournament_url, participant_id)
+    #return True
+
+#participants API POST
+#sets checked_in_at to null
+#might return participant details
+def checkin_participant(tournament_url, participant_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.check_in(tournament_url, participant_id)
+    #return False
+
+'''
+NOTE: Matches refer to each match of a tournament.
+      A match can have multiple games.
+      The score is updated by passing it as a **param
+      in update_match as a comma separated string.
+      You must also provide a winnerid, the id of the winning team.
+      This id is the participant_id that is from the challonge API.
+      EXAMPLE: "3-1,1-3" - I am not 100 on the logistics of the score_csv.
+
+'''
+
+#matches API GET
+#returns list of matches for a tournament
+def get_matches(tournament_url):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.index(tournament_url)
+
+#match API GET
+#returns single match details, participant_id
+def get_match(tournament_url, match_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.show(tournament_url, match_id)
+
+#match API PUT
+#returns updated match details
+def update_match(tournament_url, match_id, **params):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.update(tournament_url, match_id, **params)
+
+#match API POST
+#reopens match, resets matches that follow it
+#returns match details
+def reopen(tournament_url, match_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.reopen(tournament_url, match_id)
+
+#match API POST
+#mark match as underway
+#sets underway_at to current time and highlights match in bracket
+#returns match details
+def reopen(tournament_url, match_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.mark_as_underway(tournament_url, match_id)
+
+#match API POST
+#unmark match as underway
+#sets underway_at to null and unhighlights match
+#returns match details
+
+def reopen(tournament_url, match_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.matches.unmark_as_underway(tournament_url, match_id)
 
 '''
 Riot API Begin
