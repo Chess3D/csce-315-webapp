@@ -1,8 +1,16 @@
 {% for team in teams %}
   <div class="col">
+    <div class="card mb-3 h-100 position-relative text-white bg-dark">
+
     <div class="card mb-3 h-100 position-relative text-white bg-secondary">
       <div class="card-body">
-        <h5 class="card-title">{{ team.name }}</h5>
+        <h5 class="card-title"><strong>{{ team.name }}</strong></h5>
+        {% for player in team.players%}
+          {% if player.is_captain%}
+            <P>Team Captain: <span style="color:gold">{{ player }}</span></P>
+          {%endif%}
+        {%endfor%}
+        
       </div>
       <a href="{{ url_for('team.about', teamID=team.id) }}" class="stretched-link"></a>
     </div>
