@@ -36,6 +36,7 @@ class Tournament(db.Model):
     signup_cap = db.Column(db.Integer)
     start_at = db.Column(db.DateTime)
     description = db.Column(db.String(255))
+    url = db.Column(db.String(255), unique=True)
 
     entry_fee = db.Column(db.Float, default=0)
 

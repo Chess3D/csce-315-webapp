@@ -22,15 +22,9 @@ Begin challonge API
 
 #tournament API GET
 #returns a list of dictionaries, i think
-def get_tournaments():
-    url = 'https://api.challonge.com/v1/tournaments/'
-    r = requests.get(url, headers={'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp'})
-    tournaments = r.json()
-    tournament_list = []
-    for i  in range(len(tournaments['tournament'])):
-        tournament_list.append(tournaments['tournament'][i])
-    
-    return tournament_list
+def get_tournament(tournament_id):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.tournaments.show(tournament_id)
 
 
 #tournament API POST
@@ -84,8 +78,8 @@ def get_participants(tournamentURL):
 #participants API GET
 #requires tournament url and participant id
 #returns a single participant as a dictionary
-def get_participant(tournamentURL, participantID):
-    url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/' + participantID + '.json'
+def get_participant(tournamentURL, participant_id):
+    url = 'https://api.challonge.com/v1/tournaments/' + tournamentURL + '/' + participant_id + '.json'
     r = requests.get(url)
     return r.json()
 
@@ -93,12 +87,9 @@ def get_participant(tournamentURL, participantID):
 #participants API POST
 #parameters is a dictionary, currently only contains name of the participant
 #returns dictionary of participant's information
-def add_participant(parameters):
-    url = 'https://api.challonge.com/v1/tournaments.json'
-    data = {'api_key' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
-            'name' : parameters['name']}
-    r = requests.post(url, data)
-    return r.json()
+def add_participant(tournament_url, participant_name):
+    challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
+    return challonge.participants.create(tournament_url, participant_name)
 
 
 #participants API DELETE

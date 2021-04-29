@@ -19,6 +19,9 @@
 <!-- Entry Fee Info -->
 <p style="text-align: center;"><b>Entree Fee:</b>{{ tournament.entry_fee }} USD</p>
 
+<!-- Display Tournament -->
+<iframe src="http://challonge.com/{{tournament.url}}/module" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+
 
 <!-- Join Tournament Button -->
 {% if current_user.is_authenticated %}

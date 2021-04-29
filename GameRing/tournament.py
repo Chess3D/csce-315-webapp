@@ -6,7 +6,7 @@ from .models import User, Tournament, Team
 from . import db
 from datetime import datetime
 
-from .services import create_tournament as challonge_create
+from .services import create_tournament, get_tournament, add_participant
 
 tournament = Blueprint('tournament', __name__)
 
@@ -67,6 +67,7 @@ def about_post(tournamentID):
     in_tournament = False
 
     team = None
+    tournament = Tournament.query.get(tournamentID)
 
     if current_user.is_authenticated and current_user.team_id:
         on_team = True
@@ -78,6 +79,7 @@ def about_post(tournamentID):
     if on_team:
         if not in_tournament:
             team.tournament_id = tournamentID
+            add_participant(tournament.url, team.name)
         else:
             team.tournament_id = None
 
@@ -136,7 +138,8 @@ def create_post():
         return redirect(url_for('tournament.create'))
 
     # Add tournament to challonge
-    challonge_id = challonge_create(**settings)
+    challonge_id = create_tournament(**settings)
+    challonge_url = get_tournament(challonge_id)['url']
 
     # Add tournament to database
     tournament = Tournament()
@@ -145,6 +148,7 @@ def create_post():
     tournament.entry_fee = entry_fee
     tournament.tournament_type = tournament_type
     tournament.signup_cap = signup_cap
+    tournament.url = challonge_url
 
     tournament.start_at = start_at
     
