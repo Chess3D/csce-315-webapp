@@ -1,6 +1,5 @@
 {% for team in teams %}
   <div class="col">
-    <div class="card mb-3 h-100 position-relative text-white bg-dark">
 
     <div class="card mb-3 h-100 position-relative text-white bg-secondary">
       <div class="card-body">
@@ -13,6 +12,5 @@
         
       </div>
       <a href="{{ url_for('team.about', teamID=team.id) }}" class="stretched-link"></a>
-    </div>
   </div>
 {% endfor %}
