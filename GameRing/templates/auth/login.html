@@ -3,6 +3,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+  body {color:white;}
+</style>
+<body>
 <div class="m-3">
   <form method="POST" action="{{ url_for('auth.login') }}">
     <div class="mb-3">
@@ -33,4 +37,5 @@
     </div>
   </form>
 </div>
+</body>
 {% endblock %}

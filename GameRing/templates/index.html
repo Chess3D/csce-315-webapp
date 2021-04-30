@@ -6,19 +6,19 @@
 <body class="text-center">
   <br/><br/><br/>
   <div class="d-flex flex-column justify-content-center align-items-center">
-    <h1>GameRing</h1>
+    <h1><span style="color:white">GameRing</span></h1>
 
     {% if not current_user.is_authenticated %}
-      <p>Are you Ready to Rumble?</p>
+      <p><span style="color:white">Are you Ready to Rumble?</span></p>
       <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-primary">Login</a>
     {% endif %}
 
     {% if current_user.is_authenticated %}
       {% if not current_user.team_id %}
-        <p>Get Ready to Rumble!</p>
+        <p><span style="color:white">Get Ready to Rumble!</span></p>
         <a href="{{ url_for('team.teams') }}" class="btn btn-lg btn-primary">Teams</a>
       {% else %}
-        <p>Get Ready to Rumble!</p>
+        <p><span style="color:white">Get Ready to Rumble!</span></p>
         <a href="{{ url_for('tournament.tournaments') }}" class="btn btn-lg btn-primary">Tournaments</a>
       {% endif %}
     {% endif %}

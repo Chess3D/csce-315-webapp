@@ -3,12 +3,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+body {color:white;}
+</style>
 
 <link rel="stylesheet" href="about.css" />
-
+<body>
 <h1 style="text-align: center;">{{ tournament.name }}</h1>
 <h3 style="text-align: center;">Playing: {{tournament.game_type}}</h3>
-<h5 style="text-align: center; color: darkslategrey;">Starts at: {{ tournament.start_at }}</h5>
+<h5 style="text-align: center; color:yellow;">Starts at: {{ tournament.start_at }}</h5>
 
 <h3 style="text-align: center;">Participating Teams</h3>
 <ul>
@@ -42,5 +45,6 @@
     {% endif %}
 {% endif %}
 {% endif %}
+</body>
 
 {% endblock %}

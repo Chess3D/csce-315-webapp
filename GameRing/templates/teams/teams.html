@@ -4,7 +4,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<style>
+  h1 {color:white};
+</style>
 <div class="teams m-3">
   {% with messages = get_flashed_messages() %}
   {% if messages %}

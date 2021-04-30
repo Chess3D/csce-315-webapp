@@ -2,7 +2,12 @@
 
 {% extends "base.html" %}
 
+
 {% block content %}
+<style>
+    body {color:white;}
+</style>
+<body>
 <h1 style="text-align: center;">{{ team.name }}</h1>
 
 <h4 style="text-align: center;">Members</h4>
@@ -30,4 +35,5 @@
         </div>
     {% endif %}
 {% endif %}
+</body>
 {% endblock %}
