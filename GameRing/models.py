@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
 
     password = db.Column(db.String(100))
 
-    is_captian = db.Column(db.Boolean(), default=False)
+    is_captian = db.Column(db.Boolean, default=False)
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
@@ -25,6 +25,7 @@ class Team(db.Model):
     players = db.relationship('User', backref='team', lazy=True)
 
     tournament_id = db.Column(db.Integer, db.ForeignKey('tournament.id'))
+    participant_id = db.Column(db.Integer)
 
 
 class Tournament(db.Model):
@@ -39,6 +40,7 @@ class Tournament(db.Model):
     url = db.Column(db.String(255), unique=True)
 
     entry_fee = db.Column(db.Float, default=0)
+    is_active = db.Column(db.Boolean, default=False)
 
     teams = db.relationship('Team', backref='tournament', lazy=True)
     
