@@ -317,7 +317,7 @@ def get_winner(team1, team2):
         if winner_id == team1_puuid:
             return team1["teamName"]
         elif winner_id == team2_puuid:
-            return team2_puuid
+            return team2["teamName"]
         else:
             return None
     else:
