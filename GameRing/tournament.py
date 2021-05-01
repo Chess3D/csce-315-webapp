@@ -1,14 +1,18 @@
 # tournament.py
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, Flask, jsonify
 from flask_login import login_required, current_user
 from .models import User, Tournament, Team
 from . import db
 from datetime import datetime
+import json
+import os
+import stripe
 
 from . import services
 
 tournament = Blueprint('tournament', __name__)
+stripe.api_key = "sk_test_51IkuARLHCOtCmyr2UnAXwoyEyXov7TxNUDY64DINcawuBeW7zDxdRIm3oEQa6bAuIi1nRxRbNvJT7lFVLRpFCGJx00OOGFgnwY"
 
 
 # HOME
@@ -88,18 +92,44 @@ def about_post(tournamentID):
 
     if on_team:
         if not in_tournament:
-            # TODO:  Go to payment here
-
+            # TODO:  Go to payment here            
+            #pre-existing code
             team.tournament_id = tournamentID
             team.participant_id = services.add_participant(tournament.url, team.name)["id"]
+
         else:
             team.tournament_id = None
             services.remove_participant(tournament.url, team.participant_id)
             team.participant_id = None
 
         db.session.commit()
+    
+    #added code
+    if not in_tournament:
+        return render_template("/tournaments/checkout.html")
 
     return redirect(url_for('tournament.tournaments'))
+
+# Payment API (Stripe)
+def calculate_order_amount(items):
+    #make this grab tournament fee and return it
+    return 1500
+
+@tournament.route('/tournaments/<string:tournamentID>/create-payment-intent', methods=['POST'])
+def create_payment():
+    #print("inside create_payment")
+    try:
+        data = json.loads(request.data)
+        intent = stripe.PaymentIntent.create(
+            amount = calculate_order_amount(data['items']),
+            currency = 'usd'
+        )
+
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error = str(e)), 403
 
 
 # CREATE

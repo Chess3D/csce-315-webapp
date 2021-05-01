@@ -3,6 +3,8 @@ import requests
 import json
 from riotwatcher import RiotWatcher
 import challonge
+import stripe
+from flask import Flask, render_template, jsonify#, requests
 
 API_USERS = {
     'challonge' : 'GigaV9',
@@ -11,9 +13,9 @@ API_USERS = {
 API_KEYS = {
     'riot' : 'RGAPI-61fe3148-00b0-481a-863e-fc7044015e94',
     'challonge' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
+    'stripe_secret_key' : 'sk_test_51IkuARLHCOtCmyr2UnAXwoyEyXov7TxNUDY64DINcawuBeW7zDxdRIm3oEQa6bAuIi1nRxRbNvJT7lFVLRpFCGJx00OOGFgnwY',
+    'stripe_public_key' : 'pk_test_51IkuARLHCOtCmyr22HnRg7YnEpjTAHdWrlEJF7z2GzjNCF4mSkqzAVJC4ooyRJ6nCZEkXC7HXQ38ERBwaaEry6I400L2l8Lt6f'
 }
-
-
 
 '''
 Begin challonge API
