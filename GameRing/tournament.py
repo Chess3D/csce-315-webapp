@@ -90,21 +90,28 @@ def about_post(tournamentID):
 
     if on_team:
         if not in_tournament:
+
+            # Join the tournament
             if value == 'Join':
                 # TODO:  Go to payment here
 
                 team.tournament_id = tournamentID
                 team.participant_id = services.add_participant(tournament.url, team.name)["id"]
+
+        # Leave the tournamnet
         elif value == 'Leave':
             team.tournament_id = None
             services.remove_participant(tournament.url, team.participant_id)
             team.participant_id = None
+
+        # Report the outcome of the match
         elif value == 'Report Match':
             team_1 = team
             team_2 = None
 
             match_id = None
 
+            # Determin team_1 and team_2
             for match in services.get_matches(tournament.url):
                 match_id = match['id']
 
@@ -121,6 +128,7 @@ def about_post(tournamentID):
 
             info_1 = { 'teamName' : team_1.name }
             
+            # Get player captain for team_1
             for player in team_1.players:
                 if player.is_captian:
                     info_1['gameName'] = player.riotID
@@ -130,15 +138,18 @@ def about_post(tournamentID):
             if team_2 != None:
                 info_2 = { 'teamName' : team_2.name }
 
+                # Get player captain for team_2
                 for player in team_2.players:
                     if player.is_captian:
                         info_2['gameName'] = player.riotID
                         info_2['tagLine'] = player.tagline
                         break
 
+                # Get match results
                 result = services.get_winner(info_1, info_2)
                 param = None
 
+                # Update match results
                 if team_1.name == result:
                     param = {'scores_csv' : '1-0', 'winner_id' : team_1.participant_id}
                 else:
@@ -147,6 +158,7 @@ def about_post(tournamentID):
                 if param != None:
                     services.update_match(tournament.url, match_id, **param)
 
+        # Save to database
         db.session.commit()
 
     return redirect(url_for('tournament.tournaments'))
