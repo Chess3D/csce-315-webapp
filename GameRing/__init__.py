@@ -50,6 +50,9 @@ def create_app():
     from .tournament import tournament as tournament_blueprint
     app.register_blueprint(tournament_blueprint)
 
+    # PAY
+    from .payment import payment as payment_blueprint
+    app.register_blueprint(payment_blueprint)
 
     return app
 

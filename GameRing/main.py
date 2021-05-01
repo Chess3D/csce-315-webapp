@@ -10,16 +10,3 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     return render_template('index.html')
-
-
-# # SCRIMS
-# @main.route('/scrims')
-# def scrims():
-#     return render_template('scrims/scrims.html')
-
-
-# # USER
-# @main.route('/profile')
-# @login_required
-# def profile():
-#     return render_template('profile.html', name=current_user.name)
