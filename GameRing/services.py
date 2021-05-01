@@ -264,6 +264,7 @@ def get_lol_match_id(gameName, tagLine):
 #returns none of match id is not found
 def get_lol_match_info(gameName, tagLine):
     match_id = get_lol_match_id(gameName, tagLine)
+
     if match_id is None:
         return None
     else:
@@ -310,16 +311,25 @@ def get_winner(team1, team2):
     team1_match_info = get_lol_match_info(team1["gameName"], team1["tagLine"])
     team2_match_info = get_lol_match_info(team2["gameName"], team2["tagLine"])
 
+
     if team1_match_info == None:
+        return None
+    
+    if team1_match_info['status']['status_code'] == 404:
         return None
     
     if team2_match_info == None:
         return None
+    
+    if team2_match_info['status']['status_code'] == 404:
+        return None
 
-    if int(team1_match_info["metadata"]["matchId"]) == int(team2_match_info["metadata"]["matchId"]):
+    if team1_match_info["metadata"]["matchId"] == team2_match_info["metadata"]["matchId"]:
         team1_puuid = get_puuid(team1["gameName"], team1["tagLine"])
         team2_puuid = get_puuid(team2["gameName"], team2["tagLine"])
+
         winner_id = find_winner_id(team1_match_info, team1_puuid, team2_puuid)
+
         if winner_id == team1_puuid:
             return team1["teamName"]
         elif winner_id == team2_puuid:

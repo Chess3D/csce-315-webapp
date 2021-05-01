@@ -108,6 +108,9 @@ def about_post(tournamentID):
             for match in services.get_matches(tournament.url):
                 match_id = match['id']
 
+                if match['state'] == 'complete':
+                    continue
+
                 if team_1.participant_id == match['player1_id']:
                     team_2 = Team.query.filter_by(participant_id=match['player2_id']).first()
                     break
@@ -124,26 +127,25 @@ def about_post(tournamentID):
                     info_1['tagLine'] = player.tagline
                     break
             
-            info_2 = { 'teamName' : team_2.name }
+            if team_2 != None:
+                info_2 = { 'teamName' : team_2.name }
 
-            for player in team_2.players:
-                if player.is_captian:
-                    info_2['gameName'] = player.riotID
-                    info_2['tagLine'] = player.tagline
-                    break
+                for player in team_2.players:
+                    if player.is_captian:
+                        info_2['gameName'] = player.riotID
+                        info_2['tagLine'] = player.tagline
+                        break
 
-            result = services.get_winner(info_1, info_2)
-            param = None
+                result = services.get_winner(info_1, info_2)
+                param = None
 
-            if team_1.name == result:
-                param = {'scores_csv' : '1-0', 'winner_id' : team_1.participant_id}
-            elif team_2.name == result:
-                param = {'scores_csv' : '0-1', 'winner_id' : team_2.participant_id}
+                if team_1.name == result:
+                    param = {'scores_csv' : '1-0', 'winner_id' : team_1.participant_id}
+                else:
+                    param = {'scores_csv' : '0-1', 'winner_id' : team_2.participant_id}
 
-            if param != None:
-                services.update_match(tournament.url, match_id, **param)
-
-            print('Match Reported')
+                if param != None:
+                    services.update_match(tournament.url, match_id, **param)
 
         db.session.commit()
 
