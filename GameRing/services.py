@@ -9,7 +9,7 @@ API_USERS = {
 }
 
 API_KEYS = {
-    'riot' : 'RGAPI-0f4c9ac1-13f0-4c5f-937e-d0c918cb015f',
+    'riot' : 'RGAPI-61fe3148-00b0-481a-863e-fc7044015e94',
     'challonge' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
 }
 
@@ -95,7 +95,7 @@ def finalize_tournament(tournament_url):
 
 
 #tournament API POST
-#clears all scores and attatchments
+#clears all scores and attachments
 #participants can be added, edited, or removed after it is cleared.
 #might return tournament information
 def reset_tournament(tournament_url):
@@ -309,6 +309,12 @@ def find_winner_id(match_info, team1_puuid, team2_puuid):
 def get_winner(team1, team2):
     team1_match_info = get_lol_match_info(team1["gameName"], team1["tagLine"])
     team2_match_info = get_lol_match_info(team2["gameName"], team2["tagLine"])
+
+    if team1_match_info == None:
+        return None
+    
+    if team2_match_info == None:
+        return None
 
     if int(team1_match_info["metadata"]["matchId"]) == int(team2_match_info["metadata"]["matchId"]):
         team1_puuid = get_puuid(team1["gameName"], team1["tagLine"])

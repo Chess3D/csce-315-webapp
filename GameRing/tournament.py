@@ -100,8 +100,50 @@ def about_post(tournamentID):
             services.remove_participant(tournament.url, team.participant_id)
             team.participant_id = None
         elif value == 'Report Match':
-            # TODO:  Report Match
-            print('Report Match')
+            team_1 = team
+            team_2 = None
+
+            match_id = None
+
+            for match in services.get_matches(tournament.url):
+                match_id = match['id']
+
+                if team_1.participant_id == match['player1_id']:
+                    team_2 = Team.query.filter_by(participant_id=match['player2_id']).first()
+                    break
+                elif team_1.participant_id == match['player2_id']:
+                    team_2 = team_1
+                    team_1 = Team.query.filter_by(participant_id=match['player1_id']).first()
+                    break
+
+            info_1 = { 'teamName' : team_1.name }
+            
+            for player in team_1.players:
+                if player.is_captian:
+                    info_1['gameName'] = player.riotID
+                    info_1['tagLine'] = player.tagline
+                    break
+            
+            info_2 = { 'teamName' : team_2.name }
+
+            for player in team_2.players:
+                if player.is_captian:
+                    info_2['gameName'] = player.riotID
+                    info_2['tagLine'] = player.tagline
+                    break
+
+            result = services.get_winner(info_1, info_2)
+            param = None
+
+            if team_1.name == result:
+                param = {'scores_csv' : '1-0', 'winner_id' : team_1.participant_id}
+            elif team_2.name == result:
+                param = {'scores_csv' : '0-1', 'winner_id' : team_2.participant_id}
+
+            if param != None:
+                services.update_match(tournament.url, match_id, **param)
+
+            print('Match Reported')
 
         db.session.commit()
 
