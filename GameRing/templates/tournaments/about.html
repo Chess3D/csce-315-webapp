@@ -33,9 +33,11 @@ body {color:white;}
 {% if current_user.is_authenticated %}
 {% if on_team %}
     {% if not in_tournament %}
+    {% if not tournament.is_active %}
         <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
         </div>
+    {% endif %}
     {% endif %}
 
     {% if current_tournament %}

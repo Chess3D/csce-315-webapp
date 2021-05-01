@@ -6,7 +6,7 @@ from .models import User, Tournament, Team
 from . import db
 from datetime import datetime
 
-from .services import create_tournament, get_tournament, add_participant
+from . import services
 
 tournament = Blueprint('tournament', __name__)
 
@@ -43,11 +43,21 @@ def search():
 def about(tournamentID):
     this_tournament = Tournament.query.get(tournamentID)
 
+    if this_tournament == None:
+        return "This should not happen"
+
     on_team = False
     in_tournament = False
 
     current_tournament = False
     payment = False
+
+    if not this_tournament.is_active:
+        if datetime.now() > this_tournament.start_at:
+            if len(this_tournament.teams) > 2:
+                services.start_tournament(this_tournament.url)
+                this_tournament.is_active = True
+                db.session.commit()
 
     if current_user.is_authenticated and current_user.team_id:
         team = Team.query.get(current_user.team_id)
@@ -78,10 +88,14 @@ def about_post(tournamentID):
 
     if on_team:
         if not in_tournament:
+            # TODO:  Go to payment here
+
             team.tournament_id = tournamentID
-            add_participant(tournament.url, team.name)
+            team.participant_id = services.add_participant(tournament.url, team.name)["id"]
         else:
             team.tournament_id = None
+            services.remove_participant(tournament.url, team.participant_id)
+            team.participant_id = None
 
         db.session.commit()
 
@@ -113,7 +127,7 @@ def create_post():
     }
 
     if Tournament.query.filter_by(name=name).first():
-        flash('Tournament "{name}" already exists')
+        flash(f'Tournament "{name}" already exists')
         return redirect(url_for('tournament.create'))
 
     if int(signup_cap) < 2:
@@ -138,8 +152,8 @@ def create_post():
         return redirect(url_for('tournament.create'))
 
     # Add tournament to challonge
-    challonge_id = create_tournament(**settings)['id']
-    challonge_url = get_tournament(challonge_id)['url']
+    challonge_id = services.create_tournament(**settings)['id']
+    challonge_url = services.get_tournament(challonge_id)['url']
 
     # Add tournament to database
     tournament = Tournament()
