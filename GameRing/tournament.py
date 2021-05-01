@@ -44,7 +44,7 @@ def about(tournamentID):
     this_tournament = Tournament.query.get(tournamentID)
 
     if this_tournament == None:
-        return "This should not happen"
+        return redirect(url_for('tournament.tournaments'))
 
     on_team = False
     in_tournament = False
@@ -58,6 +58,8 @@ def about(tournamentID):
                 services.start_tournament(this_tournament.url)
                 this_tournament.is_active = True
                 db.session.commit()
+    
+    print(this_tournament.is_active)
 
     if current_user.is_authenticated and current_user.team_id:
         team = Team.query.get(current_user.team_id)
@@ -92,7 +94,7 @@ def about_post(tournamentID):
         if not in_tournament:
 
             # Join the tournament
-            if value == 'Join':
+            if value == 'Join' and datetime.now() < tournament.start_at:
                 # TODO:  Go to payment here
 
                 team.tournament_id = tournamentID
@@ -232,9 +234,6 @@ def create_post():
 
     db.session.add(tournament)
     db.session.commit()
-
-
-
 
     return redirect(url_for('tournament.tournaments'))
 
