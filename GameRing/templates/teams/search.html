@@ -5,9 +5,9 @@
 {% block content %}
 
   <div class="tournaments m-3">
-    <form class="input-group mb-3" method="POST" action="{{ url_for('tournament.search') }}">
+    <form class="input-group mb-3" method="POST" action="{{ url_for('team.search') }}">
       <span class="input-group-text" id="basic-addon1">Search</span>
-      <input type="search" class="form-control" placeholder="Browse Tournaments" aria-label="Browse Tournaments" aria-describedby="basic-addon1" id="searchInput" name="search">
+      <input type="search" class="form-control" placeholder="Browse Teams" aria-label="Browse Teams" aria-describedby="basic-addon1" id="searchInput" name="search">
       <input type="submit" style="display: none"/>
     </form>
   </div>
