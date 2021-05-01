@@ -54,7 +54,7 @@ def about(tournamentID):
 
     if not this_tournament.is_active:
         if datetime.now() > this_tournament.start_at:
-            if len(this_tournament.teams) > 2:
+            if len(this_tournament.teams) > 1:
                 services.start_tournament(this_tournament.url)
                 this_tournament.is_active = True
                 db.session.commit()
@@ -79,6 +79,8 @@ def about_post(tournamentID):
     team = None
     tournament = Tournament.query.get(tournamentID)
 
+    value = request.form.get('action')
+
     if current_user.is_authenticated and current_user.team_id:
         on_team = True
         team = Team.query.get(current_user.team_id)
@@ -88,14 +90,18 @@ def about_post(tournamentID):
 
     if on_team:
         if not in_tournament:
-            # TODO:  Go to payment here
+            if value == 'Join':
+                # TODO:  Go to payment here
 
-            team.tournament_id = tournamentID
-            team.participant_id = services.add_participant(tournament.url, team.name)["id"]
-        else:
+                team.tournament_id = tournamentID
+                team.participant_id = services.add_participant(tournament.url, team.name)["id"]
+        elif value == 'Leave':
             team.tournament_id = None
             services.remove_participant(tournament.url, team.participant_id)
             team.participant_id = None
+        elif value == 'Report Match':
+            # TODO:  Report Match
+            print('Report Match')
 
         db.session.commit()
 

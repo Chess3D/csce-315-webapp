@@ -28,12 +28,14 @@ body {color:white;}
 <!-- Display Tournament -->
 <iframe src="http://challonge.com/{{tournament.url}}/module" width="100%" height="500" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
 
-
-<!-- Join Tournament Button -->
+<!-- Join or Leave Tournament Button -->
 {% if current_user.is_authenticated %}
 {% if on_team %}
+
+
     {% if not in_tournament %}
     {% if not tournament.is_active %}
+        <!-- Join Tournament Button -->
         <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
         </div>
@@ -41,9 +43,18 @@ body {color:white;}
     {% endif %}
 
     {% if current_tournament %}
+        <!-- Report Match and Leave Tournament Buttons -->
+        {% if tournament.is_active %}
+            <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+                <input class="btn btn-primary btn-lg float-start" role="button" type="submit" name="action" value="Report Match"></a>
+                <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
+            </div>
+        {% endif %}
+
+        <!-- Leave Tournament Button
         <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
-        </div>
+        </div> -->
     {% endif %}
 {% endif %}
 {% endif %}
