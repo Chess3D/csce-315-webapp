@@ -107,62 +107,110 @@ def about_post(tournamentID):
 
         # Report the outcome of the match
         elif value == 'Report Match':
-            team_1 = team
-            team_2 = None
-
-            match_id = None
-
-            # Determin team_1 and team_2
-            for match in services.get_matches(tournament.url):
-                match_id = match['id']
-
-                if match['state'] == 'complete':
-                    continue
-
-                if team_1.participant_id == match['player1_id']:
-                    team_2 = Team.query.filter_by(participant_id=match['player2_id']).first()
-                    break
-                elif team_1.participant_id == match['player2_id']:
-                    team_2 = team_1
-                    team_1 = Team.query.filter_by(participant_id=match['player1_id']).first()
-                    break
-
-            info_1 = { 'teamName' : team_1.name }
-            
-            # Get player captain for team_1
-            for player in team_1.players:
-                if player.is_captian:
-                    info_1['gameName'] = player.riotID
-                    info_1['tagLine'] = player.tagline
-                    break
-            
-            if team_2 != None:
-                info_2 = { 'teamName' : team_2.name }
-
-                # Get player captain for team_2
-                for player in team_2.players:
-                    if player.is_captian:
-                        info_2['gameName'] = player.riotID
-                        info_2['tagLine'] = player.tagline
-                        break
-
-                # Get match results
-                result = services.get_winner(info_1, info_2)
-                param = None
-
-                # Update match results
-                if team_1.name == result:
-                    param = {'scores_csv' : '1-0', 'winner_id' : team_1.participant_id}
-                else:
-                    param = {'scores_csv' : '0-1', 'winner_id' : team_2.participant_id}
-
-                if param != None:
-                    services.update_match(tournament.url, match_id, **param)
+            return redirect(url_for('tournament.report'))
 
         # Save to database
         db.session.commit()
 
     return redirect(url_for('tournament.tournaments'))
+
+
+# REPORT MATCH
+@login_required
+@tournament.route('/tournaments/report')
+def report():
+    tournament = None
+
+    match_id = None
+
+    team_temp = None
+    team_1 = None
+    team_2 = None
+
+    if current_user.team_id:
+        team_temp = Team.query.get(current_user.team_id)
+
+        if team_temp.tournament_id:
+            tournament = Tournament.query.get(team_temp.tournament_id)
+        else:
+            return redirect(url_for('tournaments.tournaments'))
+    else:
+        return redirect(url_for('teams.teams'))
+
+    # Determin team_1 and team_2
+    for match in services.get_matches(tournament.url):
+        match_id = match['id']
+
+        if match['state'] == 'complete':
+            continue
+
+        if team_temp.participant_id == match['player1_id']:
+            team_1 = team_temp
+            team_2 = Team.query.filter_by(participant_id=match['player2_id'], tournament_id=tournament.id).first()
+            break
+        elif team_temp.participant_id == match['player2_id']:
+            team_1 = Team.query.filter_by(participant_id=match['player1_id'], tournament_id=tournament.id).first()
+            team_2 = team_temp
+            break
+    
+    try:
+        team_1.name
+        team_2.name
+    except:
+        return redirect(url_for('tournament.about', tournamentID=tournament.id))
+
+    return render_template('tournaments/report.html', team_1=team_1, team_2=team_2)
+
+
+@login_required
+@tournament.route('/tournaments/report', methods=['POST'])
+def report_post():
+    score_1 = request.form.get('score1')
+    score_2 = request.form.get('score2')
+
+    tournament = None
+
+    match_id = None
+
+    team_temp = None
+    team_1 = None
+    team_2 = None
+
+    if current_user.team_id:
+        team_temp = Team.query.get(current_user.team_id)
+
+        if team_temp.tournament_id:
+            tournament = Tournament.query.get(team_temp.tournament_id)
+        else:
+            return redirect(url_for('tournaments.tournaments'))
+    else:
+        return redirect(url_for('teams.teams'))
+
+    # Determine team_1 and team_2
+    for match in services.get_matches(tournament.url):
+        match_id = match['id']
+
+        if match['state'] == 'complete':
+            continue
+
+        if team_temp.participant_id == match['player1_id']:
+            team_1 = team_temp
+            team_2 = Team.query.filter_by(participant_id=match['player2_id'], tournament_id=tournament.id).first()
+            break
+        elif team_temp.participant_id == match['player2_id']:
+            team_1 = Team.query.filter_by(participant_id=match['player1_id'], tournament_id=tournament.id).first()
+            team_2 = team_temp
+            break
+    
+    if score_1 > score_2:
+        param = {'scores_csv' : f'{score_1}-{score_2}', 'winner_id' : team_1.participant_id}
+    else:
+        param = {'scores_csv' : f'{score_1}-{score_2}', 'winner_id' : team_2.participant_id}
+
+    if param != None:
+        services.update_match(tournament.url, match_id, **param)
+    
+    return redirect(url_for('tournament.about', tournamentID=tournament.id))
 
 
 # CREATE
@@ -193,7 +241,7 @@ def create_post():
         flash(f'Tournament "{name}" already exists')
         return redirect(url_for('tournament.create'))
 
-    if int(signup_cap) < 2:
+    if int(signup_cap) < 4:
         flash('Invalid signup capcity')
         return redirect(url_for('tournament.create'))
 

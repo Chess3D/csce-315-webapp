@@ -45,7 +45,9 @@ body {color:white;}
         <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
             
             {% if tournament.is_active %}
+            {% if current_user.is_captian %}
                 <input class="btn btn-primary btn-lg float-start" role="button" type="submit" name="action" value="Report Match"></a>
+            {% endif %}
             {% endif %}
 
             <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
