@@ -36,7 +36,6 @@ def get_tournament(tournament_url):
 #returns a dictionary
 def create_tournament(**parameters):
     challonge.api.set_credentials(API_USERS['challonge'], API_KEYS['challonge'])
-    print(parameters['url'])
     return challonge.tournaments.create(**parameters)
 
 

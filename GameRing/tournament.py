@@ -58,8 +58,6 @@ def about(tournamentID):
                 services.start_tournament(this_tournament.url)
                 this_tournament.is_active = True
                 db.session.commit()
-    
-    print(this_tournament.is_active)
 
     if current_user.is_authenticated and current_user.team_id:
         team = Team.query.get(current_user.team_id)
@@ -237,4 +235,3 @@ def create_post():
     db.session.commit()
 
     return redirect(url_for('tournament.tournaments'))
-
