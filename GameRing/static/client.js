@@ -2,9 +2,11 @@
 // Sign in to see examples pre-filled with your key.
 var stripe = Stripe("pk_test_51IkuARLHCOtCmyr22HnRg7YnEpjTAHdWrlEJF7z2GzjNCF4mSkqzAVJC4ooyRJ6nCZEkXC7HXQ38ERBwaaEry6I400L2l8Lt6f");
 
+let params = new URLSearchParams(location.search);
+
 // The items the customer wants to buy
 var purchase = {
-  items: [{ id: "xl-tshirt" }]
+  items: [{ tournament: params.get('tournament'), team: params.get('team') }]
 };
 
 // Disable the button until we have Stripe set up on the page
@@ -75,6 +77,14 @@ var payWithCard = function(stripe, card, clientSecret) {
       } else {
         // The payment succeeded!
         orderComplete(result.paymentIntent.id);
+        
+        fetch("/payment-success", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(purchase)
+        })
       }
     });
 };

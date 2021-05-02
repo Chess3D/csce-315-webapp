@@ -42,12 +42,14 @@ body {color:white;}
 
     {% if current_tournament %}
         <!-- Report Match and Leave Tournament Buttons -->
-        {% if tournament.is_active %}
-            <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+            
+            {% if tournament.is_active %}
                 <input class="btn btn-primary btn-lg float-start" role="button" type="submit" name="action" value="Report Match"></a>
-                <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
-            </div>
-        {% endif %}
+            {% endif %}
+
+            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
+        </div>
     {% endif %}
 {% endif %}
 {% endif %}
