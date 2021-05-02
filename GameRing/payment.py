@@ -36,3 +36,6 @@ def checkout_post():
     
     except Exception as e:
         return jsonify(error=str(e)), 403
+
+def back_to_about_page():
+    return redirect(url_for('tournament.about'))

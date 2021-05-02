@@ -95,10 +95,11 @@ def about_post(tournamentID):
 
             # Join the tournament
             if value == 'Join' and datetime.now() < tournament.start_at:
-                # TODO:  Go to payment here
-
                 team.tournament_id = tournamentID
                 team.participant_id = services.add_participant(tournament.url, team.name)["id"]
+                
+                # TODO:  Go to payment here
+                return redirect(url_for('pay.checkout'))
 
         # Leave the tournamnet
         elif value == 'Leave':

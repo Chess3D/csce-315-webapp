@@ -84,11 +84,12 @@ var payWithCard = function(stripe, card, clientSecret) {
 // Shows a success message when the payment is complete
 var orderComplete = function(paymentIntentId) {
   loading(false);
+
   document
     .querySelector(".result-message a")
     .setAttribute(
       "href",
-      "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+      "/tournaments"
     );
   document.querySelector(".result-message").classList.remove("hidden");
   document.querySelector("button").disabled = true;

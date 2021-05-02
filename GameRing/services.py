@@ -9,7 +9,7 @@ API_USERS = {
 }
 
 API_KEYS = {
-    'riot' : 'RGAPI-61fe3148-00b0-481a-863e-fc7044015e94',
+    'riot' : 'RGAPI-c04506d0-fa05-455b-bdd4-d9c1ec7bf347',
     'challonge' : '7bG0Ob124vNhDgKA0oktDfuRgiC5jKziYPTF3NUp',
 }
 
