@@ -95,7 +95,8 @@ def about_post(tournamentID):
 
             # Join the tournament
             if value == 'Join' and datetime.now() < tournament.start_at:
-                # TODO:  Go to payment here
+                if tournament.entry_fee > 0:
+                    return redirect(url_for('pay.checkout', tournament=tournament.id, team=team.id, entry_fee=tournament.entry_fee))
 
                 team.tournament_id = tournamentID
                 team.participant_id = services.add_participant(tournament.url, team.name)["id"]
