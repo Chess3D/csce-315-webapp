@@ -263,15 +263,27 @@ def create_post():
     # Format the start time
     start_date = request.form.get('start_date')
     start_time = request.form.get('start_time')
+
+    if start_date == '':
+        flash('Must input start date')
+        return redirect(url_for('tournament.create'))
+    
+    if start_time == '':
+        flash('Must input start time')
+        return redirect(url_for('tournament.create'))
     
     start_time_str = f'{start_date} {start_time}'
     start_at = datetime.strptime(start_time_str, '%Y-%m-%d %H:%M')
 
     if start_at < datetime.now():
-        flash('Invalid start time')
+        flash('Start time must be in the future')
         return redirect(url_for('tournament.create'))
 
     entry_fee = request.form.get('entry_fee')
+
+    if entry_fee == '':
+        flash('Must input entry fee')
+        return redirect(url_for('tournament.create'))
 
     if Tournament.query.filter_by(name=name).first(): 
         flash('Tournament already exists')
