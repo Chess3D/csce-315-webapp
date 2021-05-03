@@ -135,8 +135,10 @@ def report():
         if team_temp.tournament_id:
             tournament = Tournament.query.get(team_temp.tournament_id)
         else:
+            flash('Must be in tournament to report match')
             return redirect(url_for('tournaments.tournaments'))
     else:
+        flash('Must be on a team to report a match')
         return redirect(url_for('teams.teams'))
 
     # Determin team_1 and team_2
@@ -159,6 +161,7 @@ def report():
         team_1.name
         team_2.name
     except:
+        flash('Cannot report this match')
         return redirect(url_for('tournament.about', tournamentID=tournament.id))
 
     return render_template('tournaments/report.html', team_1=team_1, team_2=team_2)
@@ -184,8 +187,10 @@ def report_post():
         if team_temp.tournament_id:
             tournament = Tournament.query.get(team_temp.tournament_id)
         else:
+            flash('Must be in tournament to report match')
             return redirect(url_for('tournaments.tournaments'))
     else:
+        flash('Must be on a team to report a match')
         return redirect(url_for('teams.teams'))
 
     # Determine team_1 and team_2

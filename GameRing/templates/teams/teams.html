@@ -8,6 +8,12 @@
   h1 {color:white};
 </style>
 <div class="teams m-3">
+  <form class="input-group mb-3" method="POST" action="{{ url_for('team.search') }}">
+    <span class="input-group-text" id="basic-addon1">Search</span>
+    <input type="search" class="form-control" placeholder="Browse Teams" aria-label="Browse Teams" aria-describedby="basic-addon1" id="searchInput" name="search">
+    <input type="submit" style="display: none"/>
+  </form>
+
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div class="alert alert-danger" role="alert">
@@ -15,12 +21,6 @@
     </div>
   {% endif %}
   {% endwith %}
-
-  <form class="input-group mb-3" method="POST" action="{{ url_for('team.search') }}">
-    <span class="input-group-text" id="basic-addon1">Search</span>
-    <input type="search" class="form-control" placeholder="Browse Teams" aria-label="Browse Teams" aria-describedby="basic-addon1" id="searchInput" name="search">
-    <input type="submit" style="display: none"/>
-  </form>
 
   {% if in_team %}
     <h1 class="mb-3">My Team</h1>

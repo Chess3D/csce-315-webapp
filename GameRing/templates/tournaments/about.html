@@ -4,57 +4,66 @@
 
 {% block content %}
 <style>
-body {color:white;}
+    body {color:white;}
 </style>
 
 <link rel="stylesheet" href="about.css" />
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="alert alert-danger" role="alert">
+    {{ messages[0] }}
+  </div>
+{% endif %}
+{% endwith %}
+
 <body>
-<h1 style="text-align: center;">{{ tournament.name }}</h1>
-<h3 style="text-align: center;">Playing: {{tournament.game_type}}</h3>
-<h5 style="text-align: center; color:yellow;">Starts at: {{ tournament.start_at }}</h5>
+    <h1 style="text-align: center;">{{ tournament.name }}</h1>
+    <h3 style="text-align: center;">Playing: {{tournament.game_type}}</h3>
+    <h5 style="text-align: center; color:yellow;">Starts at: {{ tournament.start_at }}</h5>
 
-<h3 style="text-align: center;">Participating Teams</h3>
-<ul>
-{% for team in tournament.teams %}
-    <li style="text-align: center;">{{ team.name }}</li>
-{% endfor %}
-</ul>
+    <h3 style="text-align: center;">Participating Teams</h3>
+    <ul>
+    {% for team in tournament.teams %}
+        <li style="text-align: center;">{{ team.name }}</li>
+    {% endfor %}
+    </ul>
 
-<p style="text-align: center;"><b>About: </b> {{tournament.description}}</p>
+    <p style="text-align: center;"><b>About: </b> {{tournament.description}}</p>
 
-<!-- Entry Fee Info -->
-<p style="text-align: center;"><b>Entree Fee: </b>{{ tournament.entry_fee }} USD</p>
+    <!-- Entry Fee Info -->
+    <p style="text-align: center;"><b>Entree Fee: </b>{{ tournament.entry_fee }} USD</p>
 
-<!-- Display Tournament -->
-<iframe src="http://challonge.com/{{tournament.url}}/module" width="100%" height="500" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+    <!-- Display Tournament -->
+    <iframe src="http://challonge.com/{{tournament.url}}/module" width="100%" height="500" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
 
-<!-- Join or Leave Tournament Button -->
-{% if current_user.is_authenticated %}
-{% if on_team %}
-    {% if not in_tournament %}
-    {% if not tournament.is_active %}
-        <!-- Join Tournament Button -->
-        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
-            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
-        </div>
+    <!-- Join or Leave Tournament Button -->
+    {% if current_user.is_authenticated %}
+    {% if on_team %}
+        {% if not in_tournament %}
+        {% if not tournament.is_active %}
+            <!-- Join Tournament Button -->
+            <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+                <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Join"></a>
+            </div>
+        {% endif %}
+        {% endif %}
+
+        {% if current_tournament %}
+            <!-- Report Match and Leave Tournament Buttons -->
+            <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
+                
+                {% if tournament.is_active %}
+                {% if current_user.is_captian %}
+                    <input class="btn btn-primary btn-lg float-start" role="button" type="submit" name="action" value="Report Match"></a>
+                {% endif %}
+                {% endif %}
+
+                <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
+            </div>
+        {% endif %}
     {% endif %}
     {% endif %}
-
-    {% if current_tournament %}
-        <!-- Report Match and Leave Tournament Buttons -->
-        <form class="input-form fixed-bottom m-3" method="POST" action="{{ url_for('tournament.about', tournamentID=tournament.id) }}">
-            
-            {% if tournament.is_active %}
-            {% if current_user.is_captian %}
-                <input class="btn btn-primary btn-lg float-start" role="button" type="submit" name="action" value="Report Match"></a>
-            {% endif %}
-            {% endif %}
-
-            <input class="btn btn-primary btn-lg float-end" role="button" width="40" type="submit" name="action" value="Leave"></a>
-        </div>
-    {% endif %}
-{% endif %}
-{% endif %}
 </body>
 
 {% endblock %}
