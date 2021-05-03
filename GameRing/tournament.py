@@ -202,7 +202,7 @@ def report_post():
             team_2 = team_temp
             break
     
-    if score_1 > score_2:
+    if int(score_1) > int(score_2):
         param = {'scores_csv' : f'{score_1}-{score_2}', 'winner_id' : team_1.participant_id}
     else:
         param = {'scores_csv' : f'{score_1}-{score_2}', 'winner_id' : team_2.participant_id}
