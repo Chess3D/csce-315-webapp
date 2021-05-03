@@ -238,6 +238,12 @@ def create_post():
         flash('Must input name')
         return redirect(url_for('tournament.create'))
 
+    if tournament_type == 'Choose...':
+        flash('Must select elimination type')
+
+    if grand_finals_modifier == 'Choose...':
+        flash('Must select grand finals modifier')
+
     if signup_cap == '':
         flash('Must input sign up capacity')
         return redirect(url_for('tournament.create'))

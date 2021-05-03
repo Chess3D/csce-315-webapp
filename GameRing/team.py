@@ -119,7 +119,6 @@ def create_post():
         flash('Team already exists')
         return redirect(url_for('team.create'))
 
-    
     team = Team()
     team.name = name
 
