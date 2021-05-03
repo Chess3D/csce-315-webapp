@@ -98,6 +98,8 @@ def about_post(tournamentID):
 
                 team.tournament_id = tournamentID
                 team.participant_id = services.add_participant(tournament.url, team.name)["id"]
+            elif value == 'Join':
+                flash(f'Unable to join, tournament has already started')
 
         # Leave the tournamnet
         elif value == 'Leave':
