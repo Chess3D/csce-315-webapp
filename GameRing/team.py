@@ -103,6 +103,10 @@ def create():
 def create_post():
     name = request.form.get('name')
 
+    if name == '':
+        flash('Must input team name')
+        return redirect(url_for('team.teams'))
+
     if not current_user.is_authenticated:
         flash('Must be logged in')
         return redirect(url_for('team.teams'))

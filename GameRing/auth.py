@@ -47,6 +47,22 @@ def signup_post():
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
 
+    if email == '':
+        flash('Must input email')
+        return redirect(url_for('auth.signup'))
+    
+    if riotID == '':
+        flash('Must input RiotID')
+        return redirect(url_for('auth.signup'))
+    
+    if tagline == '':
+        flash('Must input tagline')
+        return redirect(url_for('auth.signup'))
+    
+    if password1 == '':
+        flash('Must input password')
+        return redirect(url_for('auth.signup'))
+
     user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again  
