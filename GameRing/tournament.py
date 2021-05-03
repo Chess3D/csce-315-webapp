@@ -234,6 +234,14 @@ def create_post():
     signup_cap = request.form.get('signup_cap')
     description = request.form.get('description')
 
+    if name == '':
+        flash('Must input name')
+        return redirect(url_for('tournament.create'))
+
+    if signup_cap == '':
+        flash('Must input sign up capacity')
+        return redirect(url_for('tournament.create'))
+
     settings = {
         'name' : name,
         'url' : None,
